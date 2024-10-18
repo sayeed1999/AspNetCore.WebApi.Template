@@ -4,15 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AspNetCore.WebApi.Template.Infrastructure.Data.Configurations;
 
-public class TodoListConfiguration : IEntityTypeConfiguration<TodoList>
+public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {
-    public void Configure(EntityTypeBuilder<TodoList> builder)
+    public void Configure(EntityTypeBuilder<Category> builder)
     {
-        builder.Property(t => t.Title)
+        builder.Property(t => t.Name)
             .HasMaxLength(200)
             .IsRequired();
-
-        builder
-            .OwnsOne(b => b.Colour);
     }
 }

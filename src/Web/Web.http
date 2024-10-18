@@ -44,96 +44,96 @@ Authorization: Bearer {{BearerToken}}
 
 ###
 
-# GET TodoLists
-GET {{Web_HostAddress}}/api/TodoLists
+# GET Categories
+GET {{Web_HostAddress}}/api/Categories
 Authorization: Bearer {{BearerToken}}
 
 ###
 
-# POST TodoLists
-POST {{Web_HostAddress}}/api/TodoLists
+# POST Categories
+POST {{Web_HostAddress}}/api/Categories
 Authorization: Bearer {{BearerToken}}
 Content-Type: application/json
 
-// CreateTodoListCommand
+// CreateCategoryCommand
 {
-  "Title": "Backlog"
+  "Name": "Backlog"
 }
 
 ###
 
-# PUT TodoLists
-PUT {{Web_HostAddress}}/api/TodoLists/1
+# PUT Categories
+PUT {{Web_HostAddress}}/api/Categories/1
 Authorization: Bearer {{BearerToken}}
 Content-Type: application/json
 
-// UpdateTodoListCommand
+// UpdateCategoryCommand
 {
   "Id": 1,
-  "Title": "Product Backlog"
+  "Name": "Product Backlog"
 }
 
 ###
 
-# DELETE TodoLists
-DELETE {{Web_HostAddress}}/api/TodoLists/1
+# DELETE Categories
+DELETE {{Web_HostAddress}}/api/Categories/1
 Authorization: Bearer {{BearerToken}}
 
 ###
 
-# GET TodoItems
+# GET Products
 @PageNumber = 1
 @PageSize = 10
-GET {{Web_HostAddress}}/api/TodoItems?ListId=1&PageNumber={{PageNumber}}&PageSize={{PageSize}}
+GET {{Web_HostAddress}}/api/Products?CategoryId=1&PageNumber={{PageNumber}}&PageSize={{PageSize}}
 
 Authorization: Bearer {{BearerToken}}
 
 ###
 
-# POST TodoItems
-POST {{Web_HostAddress}}/api/TodoItems
+# POST Products
+POST {{Web_HostAddress}}/api/Products
 Authorization: Bearer {{BearerToken}}
 Content-Type: application/json
 
-// CreateTodoItemCommand
+// CreateProductCommand
 {
-  "ListId": 1,
-  "Title": "Eat a burrito 🌯"
+  "CategoryId": 1,
+  "Name": "Eat a burrito 🌯"
 }
 
 ###
 
-#PUT TodoItems UpdateItemDetails
-PUT {{Web_HostAddress}}/api/TodoItems/UpdateItemDetails?Id=1
+#PUT Products UpdateItemDetails
+PUT {{Web_HostAddress}}/api/Products/UpdateItemDetails?Id=1
 Authorization: Bearer {{BearerToken}}
 Content-Type: application/json
 
-// UpdateTodoItemDetailCommand
+// UpdateProductDetailCommand
 {
   "Id": 1,
-  "ListId": 1,
+  "CategoryId": 1,
   "Priority": 3,
   "Note": "This is a good idea!"
 }
 
 ###
 
-# PUT TodoItems
-PUT {{Web_HostAddress}}/api/TodoItems/1
+# PUT Products
+PUT {{Web_HostAddress}}/api/Products/1
 Authorization: Bearer {{BearerToken}}
 Content-Type: application/json
 
-// UpdateTodoItemCommand
+// UpdateProductCommand
 {
   "Id": 1,
-  "Title": "Eat a yummy burrito 🌯",
+  "Name": "Eat a yummy burrito 🌯",
   "Done": true
 }
 
 ###
 
-# DELETE TodoItem
-DELETE {{Web_HostAddress}}/api/TodoItems/1
+# DELETE Product
+DELETE {{Web_HostAddress}}/api/Products/1
 Authorization: Bearer {{BearerToken}}
 
 ###

@@ -1,87 +1,60 @@
-﻿using AspNetCore.WebApi.Template.Application.Common.Exceptions;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Net;
+using System.Text.Json;
+using AspNetCore.WebApi.Template.Application.Common.Exceptions;
+using Microsoft.AspNetCore.Http;
 
 namespace AspNetCore.WebApi.Template.Web.Infrastructure;
 
-public class CustomExceptionHandler : IExceptionHandler
+public class CustomExceptionHandlerMiddleware
 {
-    private readonly Dictionary<Type, Func<HttpContext, Exception, Task>> _exceptionHandlers;
+    private readonly RequestDelegate _next;
 
-    public CustomExceptionHandler()
+    public CustomExceptionHandlerMiddleware(RequestDelegate next)
     {
-        // Register known exception types and handlers.
-        _exceptionHandlers = new()
-            {
-                { typeof(ValidationException), HandleValidationException },
-                { typeof(NotFoundException), HandleNotFoundException },
-                { typeof(UnauthorizedAccessException), HandleUnauthorizedAccessException },
-                { typeof(ForbiddenAccessException), HandleForbiddenAccessException },
-            };
+        _next = next;
     }
 
-    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+    public async Task Invoke(HttpContext context)
     {
-        var exceptionType = exception.GetType();
-
-        if (_exceptionHandlers.ContainsKey(exceptionType))
+        try
         {
-            await _exceptionHandlers[exceptionType].Invoke(httpContext, exception);
-            return true;
+            await _next(context);
+        }
+        catch (Exception ex)
+        {
+            await HandleExceptionAsync(context, ex);
+        }
+    }
+
+    private Task HandleExceptionAsync(HttpContext context, Exception exception)
+    {
+        var code = HttpStatusCode.InternalServerError;
+        string result = string.Empty;
+
+        switch (exception)
+        {
+            case ValidationException validationException:
+                code = HttpStatusCode.BadRequest;
+                result = JsonSerializer.Serialize(validationException.Errors);
+                break;
         }
 
-        return false;
-    }
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = (int)code;
 
-    private async Task HandleValidationException(HttpContext httpContext, Exception ex)
-    {
-        var exception = (ValidationException)ex;
-
-        httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-
-        await httpContext.Response.WriteAsJsonAsync(new ValidationProblemDetails(exception.Errors)
+        if (string.IsNullOrEmpty(result))
         {
-            Status = StatusCodes.Status400BadRequest,
-            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
-        });
+            result = JsonSerializer.Serialize(new { error = exception.Message });
+        }
+
+        return context.Response.WriteAsync(result);
     }
+}
 
-    private async Task HandleNotFoundException(HttpContext httpContext, Exception ex)
+public static class CustomExceptionHandlerMiddlewareExtensions
+{
+    public static IApplicationBuilder UseCustomExceptionHandler(this IApplicationBuilder builder)
     {
-        var exception = (NotFoundException)ex;
-
-        httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
-
-        await httpContext.Response.WriteAsJsonAsync(new ProblemDetails()
-        {
-            Status = StatusCodes.Status404NotFound,
-            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
-            Title = "The specified resource was not found.",
-            Detail = exception.Message
-        });
-    }
-
-    private async Task HandleUnauthorizedAccessException(HttpContext httpContext, Exception ex)
-    {
-        httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-
-        await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
-        {
-            Status = StatusCodes.Status401Unauthorized,
-            Title = "Unauthorized",
-            Type = "https://tools.ietf.org/html/rfc7235#section-3.1"
-        });
-    }
-
-    private async Task HandleForbiddenAccessException(HttpContext httpContext, Exception ex)
-    {
-        httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
-
-        await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
-        {
-            Status = StatusCodes.Status403Forbidden,
-            Title = "Forbidden",
-            Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3"
-        });
+        return builder.UseMiddleware<CustomExceptionHandlerMiddleware>();
     }
 }

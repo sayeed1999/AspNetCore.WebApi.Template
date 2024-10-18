@@ -23,6 +23,8 @@ else
     app.UseHsts();
 }
 
+app.UseCustomExceptionHandler();
+
 app.UseHealthChecks("/health");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -32,8 +34,6 @@ app.UseSwaggerUi(settings =>
     settings.Path = "/api";
     settings.DocumentPath = "/api/specification.json";
 });
-
-app.UseExceptionHandler(options => { });
 
 app.MapIdentityApi<ApplicationUser>();
 

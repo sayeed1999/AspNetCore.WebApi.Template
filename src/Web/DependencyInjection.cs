@@ -22,8 +22,6 @@ public static class DependencyInjection
         services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>();
 
-        services.AddExceptionHandler<CustomExceptionHandler>();
-
         services.AddRazorPages();
 
         // Customise default API behaviour
@@ -34,7 +32,7 @@ public static class DependencyInjection
 
         services.AddOpenApiDocument((configure, sp) =>
         {
-            configure.Title = "AspNetCore.WebApi.Template API";
+            //configure.Name = "AspNetCore.WebApi.Template API";
 
             // Add JWT
             configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme

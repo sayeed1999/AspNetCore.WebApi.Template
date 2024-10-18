@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AspNetCore.WebApi.Template.Infrastructure.Data.Configurations;
 
-public class TodoItemConfiguration : IEntityTypeConfiguration<TodoItem>
+public class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
-    public void Configure(EntityTypeBuilder<TodoItem> builder)
+    public void Configure(EntityTypeBuilder<Product> builder)
     {
-        builder.Property(t => t.Title)
+        builder.Property(t => t.Name)
             .HasMaxLength(200)
             .IsRequired();
     }

@@ -83,25 +83,25 @@ public class ApplicationDbContextInitialiser
             await _userManager.CreateAsync(administrator, "Administrator1!");
             if (!string.IsNullOrWhiteSpace(administratorRole.Name))
             {
-                await _userManager.AddToRolesAsync(administrator, new [] { administratorRole.Name });
+                await _userManager.AddToRolesAsync(administrator, new[] { administratorRole.Name });
             }
         }
 
         // Default data
         // Seed, if necessary
-        if (!_context.TodoLists.Any())
+        if (!_context.Categories.Any())
         {
-            _context.TodoLists.Add(new TodoList
-            {
-                Title = "Todo List",
-                Items =
-                {
-                    new TodoItem { Title = "Make a todo list 📃" },
-                    new TodoItem { Title = "Check off the first item ✅" },
-                    new TodoItem { Title = "Realise you've already done two things on the list! 🤯"},
-                    new TodoItem { Title = "Reward yourself with a nice, long nap 🏆" },
-                }
-            });
+            // _context.Categories.Add(new Category
+            // {
+            //     Name = "Todo List",
+            //     Items =
+            //     {
+            //         new Product { Name = "Make a todo list 📃" },
+            //         new Product { Name = "Check off the first item ✅" },
+            //         new Product { Name = "Realise you've already done two things on the list! 🤯"},
+            //         new Product { Name = "Reward yourself with a nice, long nap 🏆" },
+            //     }
+            // });
 
             await _context.SaveChangesAsync();
         }

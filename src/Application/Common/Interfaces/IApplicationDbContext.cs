@@ -4,9 +4,9 @@ namespace AspNetCore.WebApi.Template.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
-    DbSet<TodoList> TodoLists { get; }
+    DbSet<Category> Categories { get; }
 
-    DbSet<TodoItem> TodoItems { get; }
+    DbSet<Product> Products { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }
