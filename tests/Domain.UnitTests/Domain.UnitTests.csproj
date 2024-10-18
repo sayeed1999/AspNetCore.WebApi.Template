@@ -1,11 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace>AspNetCore.WebApi.Template.Application.UnitTests</RootNamespace>
-        <AssemblyName>AspNetCore.WebApi.Template.Application.UnitTests</AssemblyName>
+        <RootNamespace>AspNetCore.WebApi.Template.Domain.UnitTests</RootNamespace>
+        <AssemblyName>AspNetCore.WebApi.Template.Domain.UnitTests</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <PackageReference Include="nunit" />
         <PackageReference Include="NUnit.Analyzers">
@@ -19,15 +20,12 @@
         </PackageReference>
         <PackageReference Include="FluentAssertions" />
         <PackageReference Include="Moq" />
+        <PackageReference Include="Respawn" />
+        <PackageReference Include="Testcontainers.MsSql" />
     </ItemGroup>
-
+    
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Application\Application.csproj" />
-        <ProjectReference Include="..\..\src\Infrastructure\Infrastructure.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Common/" />
+        <ProjectReference Include="..\..\src\Domain\Domain.csproj" />
     </ItemGroup>
 
 </Project>
