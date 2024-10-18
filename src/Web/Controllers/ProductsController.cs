@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCore.WebApi.Template.Web.Controllers;
 
-public class ProductController : BaseController
+public class ProductsController : BaseController
 {
     [HttpGet]
-    public async Task<ActionResult<PaginatedList<ProductDto>>> GetProductsWithPagination(
+    public async Task<IActionResult> GetProductsWithPagination(
         [FromQuery] GetProductsWithPaginationQuery query)
     {
         var res = await Mediator.Send(query);
@@ -25,7 +25,7 @@ public class ProductController : BaseController
     }
 
     [HttpPost]
-    public async Task<ActionResult<int>> CreateProduct(CreateProductCommand command)
+    public async Task<IActionResult> CreateProduct(CreateProductCommand command)
     {
         var result = await Mediator.Send(command);
 
@@ -33,20 +33,20 @@ public class ProductController : BaseController
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<int>> UpdateProduct(int id, UpdateProductCommand command)
+    public async Task<IActionResult> UpdateProduct(int id, UpdateProductCommand command)
     {
         if (id != command.Id) return BadRequest();
 
-        await Mediator.Send(command);
+        var res = await Mediator.Send(command);
 
-        return NoContent();
+        return Ok(res);
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<int>> DeleteProduct(int id)
+    public async Task<IActionResult> DeleteProduct(int id)
     {
         var res = await Mediator.Send(new DeleteProductCommand(id));
 
-        return res;
+        return Ok(res);
     }
 }

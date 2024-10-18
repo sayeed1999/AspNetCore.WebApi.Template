@@ -5,7 +5,7 @@ namespace AspNetCore.WebApi.Template.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BaseController : ControllerBase
+    public abstract class BaseController : ControllerBase
     {
         private IMediator _mediator;
 

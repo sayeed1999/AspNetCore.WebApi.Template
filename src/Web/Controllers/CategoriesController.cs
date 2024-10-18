@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCore.WebApi.Template.Web.Controllers;
 
-public class CategoryController : BaseController
+public class CategoriesController : BaseController
 {
     [HttpGet]
-    public async Task<ActionResult<PaginatedList<CategoryDto>>> GetCategoriesWithPagination(
+    public async Task<IActionResult> GetCategoriesWithPagination(
         [FromQuery] GetCategoriesWithPaginationQuery query)
     {
         var res = await Mediator.Send(query);
@@ -24,7 +24,7 @@ public class CategoryController : BaseController
     }
 
     [HttpPost]
-    public async Task<ActionResult<int>> UpsertCategory(CreateCategoryCommand command)
+    public async Task<IActionResult> UpsertCategory(CreateCategoryCommand command)
     {
         var result = await Mediator.Send(command);
 
@@ -32,7 +32,7 @@ public class CategoryController : BaseController
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult<int>> DeleteCategory(int id)
+    public async Task<IActionResult> DeleteCategory(int id)
     {
         var res = await Mediator.Send(new DeleteCategoryCommand(id));
 
