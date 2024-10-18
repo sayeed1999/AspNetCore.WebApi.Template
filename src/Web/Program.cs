@@ -1,4 +1,5 @@
 using AspNetCore.WebApi.Template.Infrastructure.Data;
+using AspNetCore.WebApi.Template.Infrastructure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,19 +33,11 @@ app.UseSwaggerUi(settings =>
     settings.DocumentPath = "/api/specification.json";
 });
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
-
-app.MapRazorPages();
-
-app.MapFallbackToFile("index.html");
-
 app.UseExceptionHandler(options => { });
 
-app.Map("/", () => Results.Redirect("/api"));
+app.MapIdentityApi<ApplicationUser>();
 
-app.MapEndpoints();
+app.MapControllers();
 
 app.Run();
 
