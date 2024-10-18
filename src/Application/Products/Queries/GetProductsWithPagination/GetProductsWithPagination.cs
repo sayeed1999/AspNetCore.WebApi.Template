@@ -4,14 +4,14 @@ using AspNetCore.WebApi.Template.Application.Common.Models;
 
 namespace AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWithPagination;
 
-public record GetProductsWithPaginationQuery : IRequest<PaginatedList<ProductBriefDto>>
+public record GetProductsWithPaginationQuery : IRequest<PaginatedList<ProductDto>>
 {
     public int CategoryId { get; init; }
     public int PageNumber { get; init; } = 1;
     public int PageSize { get; init; } = 10;
 }
 
-public class GetProductsWithPaginationQueryHandler : IRequestHandler<GetProductsWithPaginationQuery, PaginatedList<ProductBriefDto>>
+public class GetProductsWithPaginationQueryHandler : IRequestHandler<GetProductsWithPaginationQuery, PaginatedList<ProductDto>>
 {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -22,12 +22,12 @@ public class GetProductsWithPaginationQueryHandler : IRequestHandler<GetProducts
         _mapper = mapper;
     }
 
-    public async Task<PaginatedList<ProductBriefDto>> Handle(GetProductsWithPaginationQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedList<ProductDto>> Handle(GetProductsWithPaginationQuery request, CancellationToken cancellationToken)
     {
         return await _context.Products
             .Where(x => x.CategoryId == request.CategoryId)
             .OrderBy(x => x.Name)
-            .ProjectTo<ProductBriefDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<ProductDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
 }

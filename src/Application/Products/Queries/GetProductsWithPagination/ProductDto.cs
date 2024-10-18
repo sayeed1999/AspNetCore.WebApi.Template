@@ -2,7 +2,7 @@
 
 namespace AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWithPagination;
 
-public class ProductBriefDto
+public class ProductDto
 {
     public int Id { get; init; }
 
@@ -10,13 +10,15 @@ public class ProductBriefDto
 
     public string? Name { get; init; }
 
-    public bool Done { get; init; }
+    public string? Unit { get; set; }
+
+    public decimal? Price { get; set; }
 
     private class Mapping : Profile
     {
         public Mapping()
         {
-            CreateMap<Product, ProductBriefDto>();
+            CreateMap<Product, ProductDto>();
         }
     }
 }

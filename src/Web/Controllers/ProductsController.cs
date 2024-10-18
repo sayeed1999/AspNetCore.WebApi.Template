@@ -11,7 +11,7 @@ namespace AspNetCore.WebApi.Template.Web.Controllers;
 public class ProductController : BaseController
 {
     [HttpGet]
-    public async Task<ActionResult<PaginatedList<ProductBriefDto>>> GetProductsWithPagination(
+    public async Task<ActionResult<PaginatedList<ProductDto>>> GetProductsWithPagination(
         [FromQuery] GetProductsWithPaginationQuery query)
     {
         var res = await Mediator.Send(query);
