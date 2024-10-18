@@ -8,22 +8,24 @@ public record GetCategoriesWithPaginationQuery : IRequest<PaginatedList<Category
 {
     public int PageNumber { get; init; } = 1;
     public int PageSize { get; init; } = 10;
+    public string Name { get; init; } = "";
 }
 
-public class GetCategoriesWithPaginationQueryHandler : IRequestHandler<GetCategoriesWithPaginationQuery, PaginatedList<CategoryDto>>
+public class GetCategoriesWithPaginationQueryHandler(
+    IApplicationDbContext _context,
+    IMapper _mapper)
+: IRequestHandler<GetCategoriesWithPaginationQuery, PaginatedList<CategoryDto>>
 {
-    private readonly IApplicationDbContext _context;
-    private readonly IMapper _mapper;
-
-    public GetCategoriesWithPaginationQueryHandler(IApplicationDbContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
-
     public async Task<PaginatedList<CategoryDto>> Handle(GetCategoriesWithPaginationQuery request, CancellationToken cancellationToken)
     {
-        return await _context.Categories
+        var query = _context.Categories.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(request.Name))
+        {
+            query = query.Where(c => c.Name.ToLower() == request.Name.Trim().ToLower());
+        }
+
+        return await query
             .OrderBy(x => x.Name)
             .ProjectTo<CategoryDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);
