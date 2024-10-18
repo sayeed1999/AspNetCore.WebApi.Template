@@ -8,7 +8,7 @@ namespace AspNetCore.WebApi.Template.Web.Controllers;
 public class CategoryController : BaseController
 {
     [HttpPost]
-    public async Task<ActionResult<int>> CreateCategory(CreateCategoryCommand command)
+    public async Task<ActionResult<int>> UpsertCategory(CreateCategoryCommand command)
     {
         var result = await Mediator.Send(command);
 
