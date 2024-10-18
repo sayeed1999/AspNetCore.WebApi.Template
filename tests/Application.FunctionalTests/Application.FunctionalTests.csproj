@@ -31,7 +31,6 @@
     </ItemGroup>
     
     <ItemGroup>
-      <Folder Include="Categories/Commands/UpsertCategory/" />
       <Folder Include="Categories/Queries/" />
     </ItemGroup>
 

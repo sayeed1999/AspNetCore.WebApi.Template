@@ -6,7 +6,7 @@ namespace AspNetCore.WebApi.Template.Application.Categories.Commands.CreateCateg
 
 public record CreateCategoryCommand : IRequest<CategoryDto>
 {
-    public int? Id { get; set; } = 0;
+    public int Id { get; set; } = 0;
     public string? Name { get; init; }
 }
 
@@ -17,13 +17,19 @@ public class CreateCategoryCommandHandler(
 {
     public async Task<CategoryDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
-        var entityInDB = await _context.Categories.FirstOrDefaultAsync(
-            c => c.Id == request.Id,
-            cancellationToken);
+        Category? entityInDB = null;
+
+        if (request.Id > 0)
+        {
+            entityInDB = await _context.Categories.FirstOrDefaultAsync(
+                        c => c.Id == request.Id && c.IsDeleted != true,
+                        cancellationToken);
+
+            Guard.Against.NotFound(request.Id, entityInDB);
+        }
 
         if (entityInDB is null)
         {
-
             entityInDB = new Category()
             {
                 Name = request.Name,
