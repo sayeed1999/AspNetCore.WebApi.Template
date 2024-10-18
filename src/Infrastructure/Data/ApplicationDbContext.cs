@@ -18,6 +18,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        // Note:- props validation configuration intentionally not given, as fluent validation pipeline is doing validation already!    
+        //builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 }
