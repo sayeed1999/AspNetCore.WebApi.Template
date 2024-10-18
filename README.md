@@ -13,6 +13,7 @@ Build any small, medium to large scale projects in ASP.NET Core Web API using th
 - [Setting Up](#setting-up)
 - [Running with Docker](#running-with-docker)
 - [Adding a Migration](#adding-a-migration)
+- [Contribute to this Project](#contribute-to-this-project)
 - [Special Thanks](#special-thanks)
 
 ## Setting Up
@@ -57,6 +58,10 @@ Run the following command to add a migration
 ```bash
 dotnet ef migrations add <Migration_Name> --project ./src/Infrastructure --startup-project ./src/Web --output-dir ./Data/Migrations
 ```
+
+## Contribute to this Project
+
+Please refer to contribution guide [page](./CONTRIBUTING.md).
 
 ## Special Thanks
 
