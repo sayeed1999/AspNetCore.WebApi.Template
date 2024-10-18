@@ -3,6 +3,9 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+# ignore .env file
+.env
+
 # User-specific files
 *.rsuser
 *.suo

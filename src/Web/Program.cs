@@ -3,6 +3,10 @@ using AspNetCore.WebApi.Template.Infrastructure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
+
 // Add services to the container.
 builder.Services.AddKeyVaultIfConfigured(builder.Configuration);
 
