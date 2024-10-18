@@ -22,10 +22,11 @@ public class GetCategoriesWithPaginationQueryHandler(
 
         if (!string.IsNullOrWhiteSpace(request.Name))
         {
-            query = query.Where(c => c.Name.ToLower() == request.Name.Trim().ToLower());
+            query = query.Where(c => c.Name.ToLower().Contains(request.Name.Trim().ToLower()));
         }
 
         return await query
+            .Where(x => x.IsDeleted != true)
             .OrderBy(x => x.Name)
             .ProjectTo<CategoryDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);

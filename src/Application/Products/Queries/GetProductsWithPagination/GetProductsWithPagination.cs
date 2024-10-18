@@ -23,7 +23,7 @@ public class GetProductsWithPaginationQueryHandler(
 
         if (!string.IsNullOrWhiteSpace(request.Name))
         {
-            query = query.Where(c => c.Name.ToLower() == request.Name.Trim().ToLower());
+            query = query.Where(c => c.Name.ToLower().Contains(request.Name.Trim().ToLower()));
         }
 
         if (request.CategoryId != null)
@@ -32,6 +32,7 @@ public class GetProductsWithPaginationQueryHandler(
         }
 
         return await _context.Products
+            .Where(x => x.IsDeleted != true)
             .OrderBy(x => x.Name)
             .ProjectTo<ProductDto>(_mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);
