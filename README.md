@@ -2,8 +2,9 @@
 
 Build any small, medium to large scale projects in ASP.NET Core Web API using this ASP.NET Core Web API template that comes with out-of-the box support with the followings -
 
-- **Dockerized ASP.NET Core Web API with PostgreSQL database**
-- **Clean Architecture with Mediatr**
+- **ASP.NET Core** Web API with **PostgreSQL** database
+- **Docker** support
+- **Clean Architecture** with **Mediatr**
 - Sample code for **CRUD operation** on Products, Categories
 - Sample code for **functional testing** of business usecases
 - <i>any many more..</i>
