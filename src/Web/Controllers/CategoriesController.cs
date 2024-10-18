@@ -32,10 +32,10 @@ public class CategoryController : BaseController
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteCategory(int id)
+    public async Task<ActionResult<int>> DeleteCategory(int id)
     {
-        await Mediator.Send(new DeleteCategoryCommand(id));
+        var res = await Mediator.Send(new DeleteCategoryCommand(id));
 
-        return NoContent();
+        return Ok(res);
     }
 }

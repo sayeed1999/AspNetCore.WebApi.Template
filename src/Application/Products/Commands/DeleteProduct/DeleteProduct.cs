@@ -3,9 +3,9 @@ using AspNetCore.WebApi.Template.Domain.Events;
 
 namespace AspNetCore.WebApi.Template.Application.Products.Commands.DeleteProduct;
 
-public record DeleteProductCommand(int Id) : IRequest;
+public record DeleteProductCommand(int Id) : IRequest<int>;
 
-public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand>
+public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, int>
 {
     private readonly IApplicationDbContext _context;
 
@@ -14,7 +14,7 @@ public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand>
         _context = context;
     }
 
-    public async Task Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.Products
             .FindAsync(new object[] { request.Id }, cancellationToken);
@@ -24,6 +24,8 @@ public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand>
         _context.Products.Remove(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        return entity.Id;
     }
 
 }

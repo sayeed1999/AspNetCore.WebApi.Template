@@ -1,5 +1,6 @@
 using AspNetCore.WebApi.Template.Infrastructure.Data;
 using AspNetCore.WebApi.Template.Infrastructure.Identity;
+using static AspNetCore.WebApi.Template.Web.Extensions.SwaggerServiceExtension;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddKeyVaultIfConfigured(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddWebServices();
+builder.Services.RegisterSwagger(nameof(AspNetCore.WebApi.Template));
 
 var app = builder.Build();
 
@@ -30,14 +32,14 @@ else
 app.UseCustomExceptionHandler();
 
 app.UseHealthChecks("/health");
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseSwaggerUi(settings =>
+if (builder.Environment.IsDevelopment())
 {
-    settings.Path = "/api";
-    settings.DocumentPath = "/api/specification.json";
-});
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.MapIdentityApi<ApplicationUser>();
 

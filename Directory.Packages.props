@@ -28,6 +28,7 @@
     <PackageVersion Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.10" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.11.0" />
+    <PackageVersion Include="Microsoft.OpenApi" Version="1.6.22" />
     <PackageVersion Include="Moq" Version="4.20.70" />
     <PackageVersion Include="Npgsql" Version="8.0.3" />
     <PackageVersion Include="NSwag.AspNetCore" Version="14.1.0" />
@@ -36,6 +37,9 @@
     <PackageVersion Include="NUnit.Analyzers" Version="3.9.0" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageVersion Include="Respawn" Version="6.2.1" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.Swagger" Version="6.9.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.9.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.9.0" />
     <PackageVersion Include="Testcontainers.MsSql" Version="3.9.0" />
   </ItemGroup>
 </Project>

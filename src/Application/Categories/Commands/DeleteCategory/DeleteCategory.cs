@@ -2,12 +2,12 @@
 
 namespace AspNetCore.WebApi.Template.Application.Categories.Commands.DeleteCategory;
 
-public record DeleteCategoryCommand(int Id) : IRequest;
+public record DeleteCategoryCommand(int Id) : IRequest<int>;
 
 public class DeleteCategoryCommandHandler(IApplicationDbContext _context)
-: IRequestHandler<DeleteCategoryCommand>
+: IRequestHandler<DeleteCategoryCommand, int>
 {
-    public async Task Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.Categories
             .Where(l => l.Id == request.Id)
@@ -19,5 +19,7 @@ public class DeleteCategoryCommandHandler(IApplicationDbContext _context)
         // _context.Categories.Remove(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        return entity.Id;
     }
 }

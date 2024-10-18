@@ -33,7 +33,7 @@ public class ProductController : BaseController
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> UpdateProduct(int id, UpdateProductCommand command)
+    public async Task<ActionResult<int>> UpdateProduct(int id, UpdateProductCommand command)
     {
         if (id != command.Id) return BadRequest();
 
@@ -43,10 +43,10 @@ public class ProductController : BaseController
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteProduct(int id)
+    public async Task<ActionResult<int>> DeleteProduct(int id)
     {
-        await Mediator.Send(new DeleteProductCommand(id));
+        var res = await Mediator.Send(new DeleteProductCommand(id));
 
-        return NoContent();
+        return res;
     }
 }

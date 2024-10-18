@@ -2,7 +2,7 @@
 
 namespace AspNetCore.WebApi.Template.Application.Products.Commands.UpdateProduct;
 
-public record UpdateProductCommand : IRequest
+public record UpdateProductCommand : IRequest<int>
 {
     public int Id { get; init; }
 
@@ -10,7 +10,7 @@ public record UpdateProductCommand : IRequest
 
 }
 
-public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
+public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, int>
 {
     private readonly IApplicationDbContext _context;
 
@@ -19,7 +19,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
         _context = context;
     }
 
-    public async Task Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.Products
             .FindAsync(new object[] { request.Id }, cancellationToken);
@@ -29,5 +29,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand>
         entity.Name = request.Name;
 
         await _context.SaveChangesAsync(cancellationToken);
+
+        return entity.Id;
     }
 }
