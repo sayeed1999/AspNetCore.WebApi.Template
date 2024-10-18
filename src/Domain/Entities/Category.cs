@@ -9,5 +9,5 @@ public class Category : AuditableEntity
     public string Description { get; set; }
     public byte[] Picture { get; set; }
 
-    public virtual ICollection<Product> Products { get; private set; } = new HashSet<Product>();
+    public virtual ICollection<Product> Products { get; init; } = new HashSet<Product>();
 }
