@@ -1,13 +1,16 @@
-﻿using AspNetCore.WebApi.Template.Application.Common.Interfaces;
+﻿using AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
+using AspNetCore.WebApi.Template.Application.Common.Interfaces;
 
 namespace AspNetCore.WebApi.Template.Application.Categories.Commands.DeleteCategory;
 
-public record DeleteCategoryCommand(int Id) : IRequest<int>;
+public record DeleteCategoryCommand(int Id) : IRequest<CategoryDto>;
 
-public class DeleteCategoryCommandHandler(IApplicationDbContext _context)
-: IRequestHandler<DeleteCategoryCommand, int>
+public class DeleteCategoryCommandHandler(
+    IApplicationDbContext _context,
+    IMapper _mapper)
+: IRequestHandler<DeleteCategoryCommand, CategoryDto>
 {
-    public async Task<int> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<CategoryDto> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.Categories
             .Where(l => l.Id == request.Id && l.IsDeleted != true)
@@ -20,6 +23,7 @@ public class DeleteCategoryCommandHandler(IApplicationDbContext _context)
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return entity.Id;
+        var dto = _mapper.Map<CategoryDto>(entity);
+        return dto;
     }
 }

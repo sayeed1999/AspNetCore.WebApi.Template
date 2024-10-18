@@ -1,18 +1,21 @@
-﻿using AspNetCore.WebApi.Template.Application.Common.Interfaces;
+﻿using AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
+using AspNetCore.WebApi.Template.Application.Common.Interfaces;
 using AspNetCore.WebApi.Template.Domain.Entities;
 
 namespace AspNetCore.WebApi.Template.Application.Categories.Commands.CreateCategory;
 
-public record CreateCategoryCommand : IRequest<int>
+public record CreateCategoryCommand : IRequest<CategoryDto>
 {
     public int? Id { get; set; } = 0;
     public string? Name { get; init; }
 }
 
-public class CreateCategoryCommandHandler(IApplicationDbContext _context)
-: IRequestHandler<CreateCategoryCommand, int>
+public class CreateCategoryCommandHandler(
+    IApplicationDbContext _context,
+    IMapper _mapper)
+: IRequestHandler<CreateCategoryCommand, CategoryDto>
 {
-    public async Task<int> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<CategoryDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         var entityInDB = await _context.Categories.FirstOrDefaultAsync(
             c => c.Id == request.Id,
@@ -35,6 +38,7 @@ public class CreateCategoryCommandHandler(IApplicationDbContext _context)
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return entityInDB.Id;
+        var dto = _mapper.Map<CategoryDto>(entityInDB);
+        return dto;
     }
 }
