@@ -31,7 +31,7 @@ public class GetProductsWithPaginationQueryHandler(
             query = query.Where(x => x.CategoryId == request.CategoryId);
         }
 
-        return await _context.Products
+        return await query
             .Where(x => x.IsDeleted != true)
             .OrderBy(x => x.Name)
             .ProjectTo<ProductDto>(_mapper.ConfigurationProvider)

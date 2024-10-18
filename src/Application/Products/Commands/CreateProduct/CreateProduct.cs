@@ -1,26 +1,23 @@
 ﻿using AspNetCore.WebApi.Template.Application.Common.Interfaces;
+using AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWithPagination;
 using AspNetCore.WebApi.Template.Domain.Entities;
 using AspNetCore.WebApi.Template.Domain.Events;
 
 namespace AspNetCore.WebApi.Template.Application.Products.Commands.CreateProduct;
 
-public record CreateProductCommand : IRequest<int>
+public record CreateProductCommand : IRequest<ProductDto>
 {
-    public int CategoryId { get; init; }
+    public int? CategoryId { get; init; }
 
     public string? Name { get; init; }
 }
 
-public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, int>
+public class CreateProductCommandHandler(
+    IApplicationDbContext _context,
+    IMapper _mapper
+) : IRequestHandler<CreateProductCommand, ProductDto>
 {
-    private readonly IApplicationDbContext _context;
-
-    public CreateProductCommandHandler(IApplicationDbContext context)
-    {
-        _context = context;
-    }
-
-    public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public async Task<ProductDto> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         var entity = new Product
         {
@@ -28,10 +25,10 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             Name = request.Name,
         };
 
-        _context.Products.Add(entity);
+        await _context.Products.AddAsync(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return entity.Id;
+        return _mapper.Map<ProductDto>(entity);
     }
 }

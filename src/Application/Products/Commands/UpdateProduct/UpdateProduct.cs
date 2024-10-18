@@ -1,35 +1,34 @@
 ﻿using AspNetCore.WebApi.Template.Application.Common.Interfaces;
+using AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWithPagination;
 
 namespace AspNetCore.WebApi.Template.Application.Products.Commands.UpdateProduct;
 
-public record UpdateProductCommand : IRequest<int>
+public record UpdateProductCommand : IRequest<ProductDto>
 {
     public int Id { get; init; }
-
     public string? Name { get; init; }
+    public decimal? Price { get; init; }
 
 }
 
-public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, int>
+public class UpdateProductCommandHandler(
+    IApplicationDbContext _context,
+    IMapper _mapper
+) : IRequestHandler<UpdateProductCommand, ProductDto>
 {
-    private readonly IApplicationDbContext _context;
-
-    public UpdateProductCommandHandler(IApplicationDbContext context)
-    {
-        _context = context;
-    }
-
-    public async Task<int> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+    public async Task<ProductDto> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.Products
             .FindAsync(new object[] { request.Id }, cancellationToken);
 
         Guard.Against.NotFound(request.Id, entity);
 
-        entity.Name = request.Name;
+        // partial update!
+        if (!string.IsNullOrWhiteSpace(request.Name)) entity.Name = request.Name;
+        if (request.Price != null) entity.Price = request.Price;
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return entity.Id;
+        return _mapper.Map<ProductDto>(entity);
     }
 }

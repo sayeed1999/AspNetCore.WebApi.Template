@@ -18,9 +18,9 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
                 .WithErrorCode("Unique");
     }
 
-    public async Task<bool> BeUniqueTitle(string title, CancellationToken cancellationToken)
+    private async Task<bool> BeUniqueTitle(string title, CancellationToken cancellationToken)
     {
         return await _context.Categories
-            .AllAsync(l => l.Name != title, cancellationToken);
+            .AllAsync(l => l.Name != title && l.IsDeleted != true, cancellationToken);
     }
 }

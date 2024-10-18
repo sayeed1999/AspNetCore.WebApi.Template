@@ -25,17 +25,17 @@ public class ProductsController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateProduct(CreateProductCommand command)
+    public async Task<IActionResult> CreateProduct([FromBody] CreateProductCommand command)
     {
         var result = await Mediator.Send(command);
 
         return Ok(result);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateProduct(int id, UpdateProductCommand command)
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> UpdateProduct([FromRoute] int id, [FromBody] UpdateProductCommand command)
     {
-        if (id != command.Id) return BadRequest();
+        if (id != command.Id) return BadRequest("Product id is inconsistent between route param and body.");
 
         var res = await Mediator.Send(command);
 
@@ -43,7 +43,7 @@ public class ProductsController : BaseController
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteProduct(int id)
+    public async Task<IActionResult> DeleteProduct([FromRoute] int id)
     {
         var res = await Mediator.Send(new DeleteProductCommand(id));
 

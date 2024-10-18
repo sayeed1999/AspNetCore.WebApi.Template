@@ -1,0 +1,124 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "my-dotnet-template",
+    "collectionId": "730e6a4c-a4a0-4475-bcec-9e1f77d01451",
+    "dateExported": "2024-10-18T15:23:59.147Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "9a7788f0-33ce-4a41-aedd-02d48fe88e02",
+            "colId": "730e6a4c-a4a0-4475-bcec-9e1f77d01451",
+            "containerId": "",
+            "name": "get categories",
+            "url": "localhost:5000/api/categories?name=pen",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-10-18T14:38:49.188Z",
+            "modified": "2024-10-18T15:11:38.110Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "name",
+                    "value": "pen",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "3f15e4f1-92bc-4ff6-a171-9cbe4ca8da9d",
+            "colId": "730e6a4c-a4a0-4475-bcec-9e1f77d01451",
+            "containerId": "",
+            "name": "upsert category",
+            "url": "localhost:5000/api/categories",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-10-18T14:40:24.689Z",
+            "modified": "2024-10-18T15:02:17.676Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\": 6,\n  \"name\": \"kolom\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "e44852ab-cfe5-4634-8d39-751294742b71",
+            "colId": "730e6a4c-a4a0-4475-bcec-9e1f77d01451",
+            "containerId": "",
+            "name": "soft delete category",
+            "url": "localhost:5000/api/categories/5",
+            "method": "DELETE",
+            "sortNum": 30000,
+            "created": "2024-10-18T14:46:27.308Z",
+            "modified": "2024-10-18T15:01:48.359Z",
+            "headers": []
+        },
+        {
+            "_id": "59806508-30ea-4aa2-b5ec-46edadee69a5",
+            "colId": "730e6a4c-a4a0-4475-bcec-9e1f77d01451",
+            "containerId": "",
+            "name": "get products",
+            "url": "localhost:5000/api/products?name=pen",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-10-18T15:09:27.705Z",
+            "modified": "2024-10-18T15:14:12.215Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "name",
+                    "value": "pen",
+                    "isPath": false
+                }
+            ]
+        },
+        {
+            "_id": "5497f6aa-25c2-4ee7-8ed5-1211280c7a1d",
+            "colId": "730e6a4c-a4a0-4475-bcec-9e1f77d01451",
+            "containerId": "",
+            "name": "create product",
+            "url": "localhost:5000/api/products",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-10-18T15:14:39.909Z",
+            "modified": "2024-10-18T15:15:16.747Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"biscuit\",\n  \"price\": 3\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "d1343a77-ae48-453b-baf4-fcc12f3e34cb",
+            "colId": "730e6a4c-a4a0-4475-bcec-9e1f77d01451",
+            "containerId": "",
+            "name": "update product",
+            "url": "localhost:5000/api/products/6",
+            "method": "PATCH",
+            "sortNum": 60000,
+            "created": "2024-10-18T15:15:31.039Z",
+            "modified": "2024-10-18T15:23:21.618Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"id\": 6,\n  \"name\": \"biscuit III\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "57494311-cdd1-42e5-a658-2deb22aa7295",
+            "colId": "730e6a4c-a4a0-4475-bcec-9e1f77d01451",
+            "containerId": "",
+            "name": "delete product",
+            "url": "localhost:5000/api/products/4",
+            "method": "DELETE",
+            "sortNum": 70000,
+            "created": "2024-10-18T15:22:58.088Z",
+            "modified": "2024-10-18T15:23:40.722Z",
+            "headers": []
+        }
+    ],
+    "ref": "AoQ5TW0isso0slFrFxRu7xlPGr5IM7qM_fyedwCmkX2-XtSDixjG5PbRr3Wv-uFqUF1oCzEU5aVUk3CB0deZMw"
+}

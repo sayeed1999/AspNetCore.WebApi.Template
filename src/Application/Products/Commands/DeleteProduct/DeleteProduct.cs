@@ -1,20 +1,17 @@
 ﻿using AspNetCore.WebApi.Template.Application.Common.Interfaces;
+using AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWithPagination;
 using AspNetCore.WebApi.Template.Domain.Events;
 
 namespace AspNetCore.WebApi.Template.Application.Products.Commands.DeleteProduct;
 
-public record DeleteProductCommand(int Id) : IRequest<int>;
+public record DeleteProductCommand(int Id) : IRequest<ProductDto>;
 
-public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, int>
+public class DeleteProductCommandHandler(
+    IApplicationDbContext _context,
+    IMapper _mapper
+) : IRequestHandler<DeleteProductCommand, ProductDto>
 {
-    private readonly IApplicationDbContext _context;
-
-    public DeleteProductCommandHandler(IApplicationDbContext context)
-    {
-        _context = context;
-    }
-
-    public async Task<int> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+    public async Task<ProductDto> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.Products
             .FindAsync(new object[] { request.Id }, cancellationToken);
@@ -25,7 +22,7 @@ public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand,
 
         await _context.SaveChangesAsync(cancellationToken);
 
-        return entity.Id;
+        return _mapper.Map<ProductDto>(entity);
     }
 
 }
