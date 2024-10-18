@@ -35,6 +35,14 @@ URI: /GET localhost:5000/health
 docker-compose down
 ```
 
+## Adding a Migration
+
+Run the following command to add a migration
+
+```bash
+dotnet ef migrations add <Migration_Name> --project ./src/Infrastructure --startup-project ./src/Web --output-dir ./Data/Migrations
+```
+
 ## Special Thanks
 
 I used the following two templates to start my own template:
