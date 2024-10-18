@@ -13,12 +13,4 @@ public class ProductDto
     public string? Unit { get; set; }
 
     public decimal? Price { get; set; }
-
-    private class Mapping : Profile
-    {
-        public Mapping()
-        {
-            CreateMap<Product, ProductDto>();
-        }
-    }
 }
