@@ -33,6 +33,10 @@ public class CustomExceptionHandlerMiddleware
 
         switch (exception)
         {
+            case NotFoundException notFoundException:
+                code = HttpStatusCode.NotFound;
+                result = JsonSerializer.Serialize(notFoundException.Message);
+                break;
             case ValidationException validationException:
                 code = HttpStatusCode.BadRequest;
                 result = JsonSerializer.Serialize(validationException.Errors);

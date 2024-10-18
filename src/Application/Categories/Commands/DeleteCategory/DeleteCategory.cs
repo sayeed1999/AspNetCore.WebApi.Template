@@ -10,7 +10,7 @@ public class DeleteCategoryCommandHandler(IApplicationDbContext _context)
     public async Task<int> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
         var entity = await _context.Categories
-            .Where(l => l.Id == request.Id)
+            .Where(l => l.Id == request.Id && l.IsDeleted != true)
             .SingleOrDefaultAsync(cancellationToken);
 
         Guard.Against.NotFound(request.Id, entity);
