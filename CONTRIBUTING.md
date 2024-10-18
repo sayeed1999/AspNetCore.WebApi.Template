@@ -1,4 +1,4 @@
-# Contributing to [Project Name]
+# Contribution Guideline
 
 Thank you for considering contributing to [AspNetCore.WebApi.Template]! We welcome any and all contributions to improve the project. Please take a moment to review this guide to make sure your contribution process is smooth and effective.
 
