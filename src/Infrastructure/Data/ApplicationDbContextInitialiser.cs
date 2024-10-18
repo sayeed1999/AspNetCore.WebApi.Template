@@ -91,17 +91,25 @@ public class ApplicationDbContextInitialiser
         // Seed, if necessary
         if (!_context.Categories.Any())
         {
-            // _context.Categories.Add(new Category
-            // {
-            //     Name = "Todo List",
-            //     Items =
-            //     {
-            //         new Product { Name = "Make a todo list 📃" },
-            //         new Product { Name = "Check off the first item ✅" },
-            //         new Product { Name = "Realise you've already done two things on the list! 🤯"},
-            //         new Product { Name = "Reward yourself with a nice, long nap 🏆" },
-            //     }
-            // });
+            await _context.Categories.AddRangeAsync(
+                new Category
+                {
+                    Name = "Pen",
+                    Products =
+                {
+                    new Product { Name = "Matador Ball Pen", Price = 5 },
+                    new Product { Name = "Matador Gel Pen", Price = 6 }
+                },
+                },
+                new Category
+                {
+                    Name = "Pencil",
+                    Products =
+                {
+                    new Product { Name = "Matador HB Pencil", Price = 7 },
+                    new Product { Name = "Matador 2B Pen", Price = 7 }
+                },
+                });
 
             await _context.SaveChangesAsync();
         }
