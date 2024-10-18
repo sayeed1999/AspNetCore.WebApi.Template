@@ -14,6 +14,8 @@ services:
       - ConnectionStrings__DefaultConnection=Server=postgres;Database=template-db;User Id=${POSTGRES_USER};Password=${POSTGRES_PASSWORD};
     networks:
       - api-net
+    depends_on:
+      - postgres
   
   postgres:
     image: 'postgres:16.4'
@@ -38,12 +40,12 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
-    depends_on:
-      - postgres
     volumes:
       - ./data/pgadmin/:/var/lib/pgadmin/
     networks:
       - db-net
+    depends_on:
+      - postgres
 
 networks:
   api-net:
