@@ -2,7 +2,14 @@
 
 This template helps you to start building any small, medium to large scale projects in ASP.NET Core Web API.
 
-## Getting Started
+## Table of Contents
+
+- [Setting Up]
+- [Running with Docker]
+- [Adding a Migration]
+- [Special Thanks]
+
+## Setting Up
 
 - Clone the repository & navigate to project root directory.
 
@@ -14,6 +21,8 @@ export POSTGRES_PASSWORD=xxx
 export PGADMIN_EMAIL=xxx
 export PGADMIN_PASSWORD=xxx
 ```
+
+## Running with Docker
 
 - Ensure Docker is installed on your system.
 
