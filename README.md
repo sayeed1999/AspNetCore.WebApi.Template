@@ -4,10 +4,10 @@ This template helps you to start building any small, medium to large scale proje
 
 ## Table of Contents
 
-- [Setting Up]
-- [Running with Docker]
-- [Adding a Migration]
-- [Special Thanks]
+- [Setting Up](#setting-up)
+- [Running with Docker](#running-with-docker)
+- [Adding a Migration](#adding-a-migration)
+- [Special Thanks](#special-thanks)
 
 ## Setting Up
 
