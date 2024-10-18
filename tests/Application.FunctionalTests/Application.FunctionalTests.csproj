@@ -29,5 +29,10 @@
         <ProjectReference Include="..\..\src\Application\Application.csproj" />
         <ProjectReference Include="..\..\src\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Categories/Commands/UpsertCategory/" />
+      <Folder Include="Categories/Queries/" />
+    </ItemGroup>
 
 </Project>

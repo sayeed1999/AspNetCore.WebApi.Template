@@ -5,12 +5,12 @@ using AutoMapper;
 
 namespace AspNetCore.WebApi.Template.Application.FunctionalTests.Common;
 
-public class CommandTestBase : IDisposable
+public class TestBase : IDisposable
 {
     protected readonly ApplicationDbContext _context;
-    protected IMapper Mapper { get; private set; }
+    protected IMapper _mapper { get; private set; }
 
-    public CommandTestBase()
+    public TestBase()
     {
         _context = ApplicationDbContextFactory.Create();
 
@@ -19,7 +19,7 @@ public class CommandTestBase : IDisposable
             cfg.AddProfile<MappingProfile>();
         });
 
-        Mapper = configurationProvider.CreateMapper();
+        _mapper = configurationProvider.CreateMapper();
     }
 
     public void Dispose()
