@@ -34,3 +34,10 @@ URI: /GET localhost:5000/health
 ```bash
 docker-compose down
 ```
+
+## Special Thanks
+
+I used the following two templates to start my own template:
+
+- [jasontaylordev/CleanArchitecture](https://github.com/jasontaylordev/CleanArchitecture)
+- [jasontaylordev/NorthwindTraders](https://github.com/jasontaylordev/NorthwindTraders)

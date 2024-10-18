@@ -16,7 +16,7 @@ services:
       - api-net
   
   postgres:
-    image: 'postgres:16'
+    image: 'postgres:16.4'
     container_name: postgres
     ports:
       - "5432:5432"
@@ -30,9 +30,9 @@ services:
       - api-net
       - db-net
 
-  pgadmin:
+  postgres-admin:
     image: dpage/pgadmin4
-    container_name: pgadmin
+    container_name: postgres-admin
     ports:
       - 8082:80
     environment:

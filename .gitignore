@@ -6,6 +6,9 @@
 # ignore .env file
 .env
 
+# volumes
+/data
+
 # User-specific files
 *.rsuser
 *.suo
