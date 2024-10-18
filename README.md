@@ -14,3 +14,23 @@ export POSTGRES_PASSWORD=xxx
 export PGADMIN_EMAIL=xxx
 export PGADMIN_PASSWORD=xxx
 ```
+
+- Ensure Docker is installed on your system.
+
+- Run the docker containers using the following command.
+
+```bash
+docker-compose up -d
+```
+
+- Hit the healthcheck endpoint to see API is working on not.
+
+```
+URI: /GET localhost:5000/health
+```
+
+- Stop the docker container using the following command.
+
+```bash
+docker-compose down
+```

@@ -5,6 +5,9 @@ services:
       context: .
       dockerfile: ./Dockerfile
     container_name: web-api
+    ports:
+      - "5000:8080"
+      - "5001:8081"
     restart: unless-stopped
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
