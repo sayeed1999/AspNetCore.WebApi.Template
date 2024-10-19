@@ -1,10 +1,11 @@
 # ASP.NET Core Web API Template
 
-Build any small, medium to large scale projects in ASP.NET Core Web API using this ASP.NET Core Web API template that comes with out-of-the box support with the followings -
+**AspNetCore.WebApi.Template** is an open-source project to speed up the API development process of any small-large scale application in ASP.NET Core. This comes with out-of-the box prebuilt setups including -
 
 - **ASP.NET Core** Web API with **PostgreSQL** database
-- **Docker** support
-- **Clean Architecture** with **Mediatr**
+- **Docker** container support
+- **Clean Architecture** with **CQRS** and **Mediatr**
+- **FluentValidation** middleware pipeline to validate requests
 - Sample code for **CRUD operation** on Products, Categories
 - Sample code for **functional testing** of business usecases
 - <i>any many more..</i>
