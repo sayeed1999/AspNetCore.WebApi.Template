@@ -28,21 +28,29 @@ else
     app.UseHsts();
 }
 
-app.UseCustomExceptionHandler();
-
-app.UseHealthChecks("/health");
-// app.UseHttpsRedirection();
-app.UseStaticFiles();
-
 if (builder.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.MapIdentityApi<ApplicationUser>();
+app.UseCustomExceptionHandler();
+
+#if DEBUG
+app.UseHttpsRedirection();
+#endif
+
+app.UseStaticFiles();
+
+app.UseHealthChecks("/health");
+
+app.UseRouting();
+
+app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapIdentityApi<ApplicationUser>();
 
 app.Run();
 
