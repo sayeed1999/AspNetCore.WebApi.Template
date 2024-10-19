@@ -12,10 +12,22 @@ Build any small, medium to large scale projects in ASP.NET Core Web API using th
 ## Table of Contents
 
 - [Setting Up](#setting-up)
+- [Architecture Overview](#architecture-overview)
 - [Running with Docker](#running-with-docker)
 - [Adding a Migration](#adding-a-migration)
 - [Contribute to this Project](#contribute-to-this-project)
 - [Special Thanks](#special-thanks)
+
+## Architecture Overview
+
+This project is built on top of Clean Architecture with CQRS and Mediator pattern in ASP.NET Core.
+
+To get a high-level overview of the responsibilites each of the layers in this project, please refer to -
+
+- [Presentation Layer](src/Web/README.md)
+- [Application Layer](src/Application/README.md)
+- [Infrastructure Layer](src/Infrastructure/README.md)
+- [Domain Layer](src/Domain/README.md)
 
 ## Setting Up
 
