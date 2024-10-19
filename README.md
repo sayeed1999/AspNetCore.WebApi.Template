@@ -12,16 +12,16 @@
 
 ## Table of Contents
 
-- [Setting Up](#setting-up)
-- [Architecture Overview](#architecture-overview)
-- [Running with Docker](#running-with-docker)
-- [Adding a Migration](#adding-a-migration)
+- [Architecture](#architecture)
+- [Set Up Environment Variables](#set-up-environment-variables)
+- [Run with Docker](#run-with-docker)
+- [Add a Migration](#add-a-migration)
 - [Contribute to this Project](#contribute-to-this-project)
 - [Special Thanks](#special-thanks)
 
-## Architecture Overview
+## Architecture
 
-This project is built on top of Clean Architecture with CQRS and Mediator pattern in ASP.NET Core.
+This project is built on top of **Clean Architecture** with **CQRS** and **Mediator** pattern in **ASP.NET Core**.
 
 To get a high-level overview of the responsibilites each of the layers in this project, please refer to -
 
@@ -30,7 +30,7 @@ To get a high-level overview of the responsibilites each of the layers in this p
 - [Infrastructure Layer](src/Infrastructure/README.md)
 - [Domain Layer](src/Domain/README.md)
 
-## Setting Up
+## Set Up Environment Variables
 
 - Clone the repository & navigate to project root directory.
 
@@ -43,7 +43,7 @@ export PGADMIN_EMAIL=xxx
 export PGADMIN_PASSWORD=xxx
 ```
 
-## Running with Docker
+## Run with Docker
 
 - Ensure Docker is installed on your system.
 
@@ -65,7 +65,7 @@ URI: /GET localhost:5000/health
 docker-compose down
 ```
 
-## Adding a Migration
+## Add a Migration
 
 Run the following command to add a migration
 
