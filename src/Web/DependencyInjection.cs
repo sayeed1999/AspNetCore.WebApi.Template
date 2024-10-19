@@ -12,7 +12,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddWebServices(this IServiceCollection services)
     {
+#if DEBUG
         services.AddDatabaseDeveloperPageExceptionFilter();
+#endif
 
         services.AddScoped<IUser, CurrentUser>();
 
@@ -20,8 +22,6 @@ public static class DependencyInjection
 
         services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>();
-
-        services.AddRazorPages();
 
         // Customise default API behaviour
         services.Configure<ApiBehaviorOptions>(options =>
