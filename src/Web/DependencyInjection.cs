@@ -3,11 +3,10 @@ using AspNetCore.WebApi.Template.Application.Common.Interfaces;
 using AspNetCore.WebApi.Template.Infrastructure.Data;
 using AspNetCore.WebApi.Template.Web.Services;
 using Microsoft.AspNetCore.Mvc;
+using AspNetCore.WebApi.Template.Web.Extensions;
+using static AspNetCore.WebApi.Template.Web.Extensions.SwaggerServiceExtension;
 
-using NSwag;
-using NSwag.Generation.Processors.Security;
-
-namespace Microsoft.Extensions.DependencyInjection;
+namespace AspNetCore.WebApi.Template;
 
 public static class DependencyInjection
 {
@@ -30,21 +29,7 @@ public static class DependencyInjection
 
         services.AddEndpointsApiExplorer();
 
-        services.AddOpenApiDocument((configure, sp) =>
-        {
-            //configure.Name = "AspNetCore.WebApi.Template API";
-
-            // Add JWT
-            configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
-            {
-                Type = OpenApiSecuritySchemeType.ApiKey,
-                Name = "Authorization",
-                In = OpenApiSecurityApiKeyLocation.Header,
-                Description = "Type into the textbox: Bearer {your JWT token}."
-            });
-
-            configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
-        });
+        services.RegisterSwagger(nameof(AspNetCore.WebApi.Template));
 
         return services;
     }

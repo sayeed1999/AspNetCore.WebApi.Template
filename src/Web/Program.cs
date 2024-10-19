@@ -1,6 +1,6 @@
 using AspNetCore.WebApi.Template.Infrastructure.Data;
 using AspNetCore.WebApi.Template.Infrastructure.Identity;
-using static AspNetCore.WebApi.Template.Web.Extensions.SwaggerServiceExtension;
+using static AspNetCore.WebApi.Template.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +14,6 @@ builder.Services.AddKeyVaultIfConfigured(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddWebServices();
-builder.Services.RegisterSwagger(nameof(AspNetCore.WebApi.Template));
 
 var app = builder.Build();
 
