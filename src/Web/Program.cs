@@ -44,8 +44,6 @@ app.UseStaticFiles();
 
 app.UseHealthChecks("/health");
 
-app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllers();

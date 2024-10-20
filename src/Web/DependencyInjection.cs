@@ -5,6 +5,7 @@ using AspNetCore.WebApi.Template.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 using AspNetCore.WebApi.Template.Web.Extensions;
 using static AspNetCore.WebApi.Template.Web.Extensions.SwaggerServiceExtension;
+using System.Text.Json.Serialization;
 
 namespace AspNetCore.WebApi.Template;
 
@@ -12,9 +13,12 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddWebServices(this IServiceCollection services)
     {
-#if DEBUG
-        services.AddDatabaseDeveloperPageExceptionFilter();
-#endif
+        services.AddControllers()
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+            options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals;
+        });
 
         services.AddScoped<IUser, CurrentUser>();
 
@@ -26,8 +30,6 @@ public static class DependencyInjection
         // Customise default API behaviour
         services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
-
-        services.AddEndpointsApiExplorer();
 
         services.RegisterSwagger(nameof(AspNetCore.WebApi.Template));
 
