@@ -17,9 +17,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        base.OnModelCreating(builder);
+        // Global query filter to not load soft deleted items!
+        builder.Entity<Category>().HasQueryFilter(x => x.IsDeleted != true);
+        builder.Entity<Product>().HasQueryFilter(x => x.IsDeleted != true);
 
-        // Note:- props validation configuration intentionally not given, as fluent validation pipeline is doing validation already!    
-        //builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        base.OnModelCreating(builder);
+        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 }
