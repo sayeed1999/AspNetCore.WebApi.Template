@@ -15,6 +15,7 @@ public class PeriodicTrashCleaner(
     ILogger<PeriodicTrashCleaner> logger) : BackgroundService
 {
     private readonly TimeSpan _period = TimeSpan.FromDays(1);
+    public bool IsEnabled { get; set; } = true;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -27,6 +28,12 @@ public class PeriodicTrashCleaner(
         {
             try
             {
+                if (!IsEnabled)
+                {
+                    logger.LogInformation($"{nameof(PeriodicTrashCleaner)}  execution skipped..");
+                    continue;
+                }
+
                 using var scope = serviceProvider.CreateScope();
 
                 var dbContext = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();

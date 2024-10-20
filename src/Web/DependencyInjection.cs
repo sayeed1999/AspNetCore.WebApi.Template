@@ -21,8 +21,7 @@ public static class DependencyInjection
             options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals;
         });
 
-        services.AddHostedService<InitializeDatabaseWorker>();
-        services.AddHostedService<PeriodicTrashCleaner>();
+        services.AddBackgroundServices();
 
         services.AddScoped<IUser, CurrentUser>();
 
@@ -36,6 +35,21 @@ public static class DependencyInjection
             options.SuppressModelStateInvalidFilter = true);
 
         services.RegisterSwagger(nameof(AspNetCore.WebApi.Template));
+
+        return services;
+    }
+
+    public static IServiceCollection AddBackgroundServices(this IServiceCollection services)
+    {
+        services.AddHostedService<InitializeDatabaseWorker>();
+
+        /// Note:- Since we injected the background service in a route, and it's not possible to
+        /// inject a hosted service through DI, we need to add the service as a Singleton first, 
+        /// then use it for the hosted service registration.
+
+        services.AddSingleton<PeriodicTrashCleaner>();
+        services.AddHostedService(
+            provider => provider.GetRequiredService<PeriodicTrashCleaner>());
 
         return services;
     }
