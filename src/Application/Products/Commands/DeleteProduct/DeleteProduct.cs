@@ -18,7 +18,10 @@ public class DeleteProductCommandHandler(
 
         Guard.Against.NotFound(request.Id, entity);
 
-        _context.Products.Remove(entity);
+        // Note:- Soft delete is safer for real business. 
+        // Hard delete should only be done with background job after a specific period of time.
+        entity.IsDeleted = true;
+        // _context.Products.Remove(entity);
 
         await _context.SaveChangesAsync(cancellationToken);
 

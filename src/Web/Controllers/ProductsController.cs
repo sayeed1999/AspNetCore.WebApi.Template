@@ -1,9 +1,7 @@
-using AspNetCore.WebApi.Template.Application.Common.Models;
 using AspNetCore.WebApi.Template.Application.Products.Commands.CreateProduct;
 using AspNetCore.WebApi.Template.Application.Products.Commands.DeleteProduct;
 using AspNetCore.WebApi.Template.Application.Products.Commands.UpdateProduct;
 using AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWithPagination;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCore.WebApi.Template.Web.Controllers;
@@ -35,7 +33,7 @@ public class ProductsController : BaseController
     [HttpPatch("{id}")]
     public async Task<IActionResult> UpdateProduct([FromRoute] int id, [FromBody] UpdateProductCommand command)
     {
-        if (id != command.Id) return BadRequest("Product id is inconsistent between route param and body.");
+        command.Id = id;
 
         var res = await Mediator.Send(command);
 

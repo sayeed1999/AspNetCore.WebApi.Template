@@ -5,7 +5,7 @@ namespace AspNetCore.WebApi.Template.Application.Products.Commands.UpdateProduct
 
 public record UpdateProductCommand : IRequest<ProductDto>
 {
-    public int Id { get; init; }
+    public int Id { get; set; }
     public string? Name { get; init; }
     public decimal? Price { get; init; }
 
@@ -23,7 +23,7 @@ public class UpdateProductCommandHandler(
 
         Guard.Against.NotFound(request.Id, entity);
 
-        // partial update!
+        // partial update by fields!
         if (!string.IsNullOrWhiteSpace(request.Name)) entity.Name = request.Name;
         if (request.Price != null) entity.Price = request.Price;
 
