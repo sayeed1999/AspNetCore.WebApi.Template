@@ -10,19 +10,16 @@ using Microsoft.Extensions.Logging;
 
 namespace AspNetCore.WebApi.Template.Infrastructure.Data;
 
-public static class InitialiserExtensions
-{
-    public static async Task InitialiseDatabaseAsync(this WebApplication app)
-    {
-        using var scope = app.Services.CreateScope();
-
-        var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
-
-        await initialiser.InitialiseAsync();
-
-        await initialiser.SeedAsync();
-    }
-}
+// public static class InitialiserExtensions
+// {
+//     public static async Task InitialiseDatabaseAsync(this WebApplication app)
+//     {
+//         using var scope = app.Services.CreateScope();
+//         var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
+//         await initialiser.InitialiseAsync();s
+//         await initialiser.SeedAsync();
+//     }
+// }
 
 public class ApplicationDbContextInitialiser
 {

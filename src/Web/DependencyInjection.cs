@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using AspNetCore.WebApi.Template.Web.Extensions;
 using static AspNetCore.WebApi.Template.Web.Extensions.SwaggerServiceExtension;
 using System.Text.Json.Serialization;
+using AspNetCore.WebApi.Template.Web.Workers;
 
 namespace AspNetCore.WebApi.Template;
 
@@ -19,6 +20,8 @@ public static class DependencyInjection
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals;
         });
+
+        services.AddHostedService<InitializeDatabaseWorker>();
 
         services.AddScoped<IUser, CurrentUser>();
 
