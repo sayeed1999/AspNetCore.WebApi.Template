@@ -22,6 +22,7 @@ public static class DependencyInjection
         });
 
         services.AddHostedService<InitializeDatabaseWorker>();
+        services.AddHostedService<PeriodicTrashCleaner>();
 
         services.AddScoped<IUser, CurrentUser>();
 
