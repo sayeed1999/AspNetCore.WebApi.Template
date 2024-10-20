@@ -27,7 +27,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - PGDATA=/data/postgres
     volumes:
-      - /data/postgres:/data/postgres
+      - ~/data/postgres:/data/postgres
     networks:
       - api-net
       - db-net
@@ -41,7 +41,7 @@ services:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
     volumes:
-      - /data/pgadmin/:/var/lib/pgadmin/
+      - ~/data/pgadmin/:/var/lib/pgadmin/
     networks:
       - db-net
     depends_on:
