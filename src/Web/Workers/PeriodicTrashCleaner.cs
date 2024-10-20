@@ -3,6 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCore.WebApi.Template.Web.Workers;
 
+/// <summary>
+/// This recurring background job runs every day once and deletes all entities
+/// from database than are in trash for 30days. This worker service helps to clean off
+/// soft deleted items from trash after a safe period of time.
+/// </summary>
+/// <param name="serviceProvider"></param>
+/// <param name="logger"></param>
 public class PeriodicTrashCleaner(
     IServiceProvider serviceProvider,
     ILogger<PeriodicTrashCleaner> logger) : BackgroundService
@@ -37,7 +44,7 @@ public class PeriodicTrashCleaner(
                 await dbContext.SaveChangesAsync(stoppingToken);
 
                 logger.LogInformation($"{deletedProductsCount} products deleted from trash...");
-                logger.LogInformation($"{deletedCategoriesCount} products deleted from trash...");
+                logger.LogInformation($"{deletedCategoriesCount} categories deleted from trash...");
 
             }
             catch (Exception ex)
