@@ -13,14 +13,13 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
         RuleFor(v => v.Name)
             .NotEmpty()
             .MaximumLength(200)
-            .MustAsync(BeUniqueTitle)
+            .Must(BeUniqueTitle)
                 .WithMessage("'{PropertyName}' must be unique.")
                 .WithErrorCode("Unique");
     }
 
-    private async Task<bool> BeUniqueTitle(string title, CancellationToken cancellationToken)
-    {
-        return await _context.Categories
-            .AllAsync(l => l.Name != title && l.IsDeleted != true, cancellationToken);
-    }
+    // ASP.NET validation pipeline is not asynchronous and hence can’t invoke asynchronous rules.
+    // Ref: https://medium.com/cheranga/using-asynchronous-fluent-validations-in-asp-net-api-831710b0b9cd
+    private bool BeUniqueTitle(string title) =>
+        _context.Categories.All(l => l.Name != title && l.IsDeleted != true);
 }
