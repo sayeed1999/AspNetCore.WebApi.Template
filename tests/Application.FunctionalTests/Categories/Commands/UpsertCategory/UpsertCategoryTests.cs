@@ -21,7 +21,7 @@ public class UpsertCategoryTests : TestBase
         // Arrange
         var command = new UpsertCategoryCommand
         {
-            Id = 0,
+            Id = Guid.Empty,
             Name = "New Category"
         };
 
@@ -64,7 +64,7 @@ public class UpsertCategoryTests : TestBase
     public async Task Handle_ShouldThrowNotFoundException_WhenCategoryIdDoesNotExist()
     {
         // Arrange
-        var nonExistentCategoryId = 999; // An ID that does not exist
+        var nonExistentCategoryId = Guid.NewGuid(); // An ID that does not exist
         var command = new UpsertCategoryCommand
         {
             Id = nonExistentCategoryId,

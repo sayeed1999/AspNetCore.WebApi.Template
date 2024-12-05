@@ -4,9 +4,9 @@ namespace AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWit
 
 public class ProductDto
 {
-    public int Id { get; init; }
+    public Guid Id { get; init; }
 
-    public int CategoryId { get; init; }
+    public Guid? CategoryId { get; init; }
 
     public string? Name { get; init; }
 

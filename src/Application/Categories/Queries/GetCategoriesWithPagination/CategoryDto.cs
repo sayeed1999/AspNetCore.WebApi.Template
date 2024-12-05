@@ -5,7 +5,7 @@ namespace AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategorie
 
 public class CategoryDto
 {
-    public int Id { get; init; }
+    public Guid? Id { get; init; }
 
     public string? Name { get; init; }
 }

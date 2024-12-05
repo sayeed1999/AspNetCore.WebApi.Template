@@ -7,6 +7,6 @@ namespace AspNetCore.WebApi.Template.Application.Products.Commands.CreateProduct
 
 public record CreateProductCommand : IRequest<ProductDto>
 {
-    public int? CategoryId { get; init; }
+    public Guid? CategoryId { get; init; }
     public string? Name { get; init; }
 }

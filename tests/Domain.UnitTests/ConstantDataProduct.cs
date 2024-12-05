@@ -1,46 +1,50 @@
 using System;
+using System.Collections.Generic;
 using AspNetCore.WebApi.Template.Domain.Entities;
 
 namespace Domain.UnitTests;
 
 public static partial class ConstantData
 {
-    public static readonly Product Product1 = new Product
-    {
-        Name = "Smartphone",
-        CategoryId = 1, // Assuming it's linked to the "Electronics" category
-        Unit = "Pcs",
-        Price = 299.99M,
-        ReorderLevel = 10,
-        Discontinued = false,
-    };
+    public static readonly Guid TestProduct1Id = Guid.NewGuid();
+    public static readonly Guid TestProduct2Id = Guid.NewGuid();
 
-    public static readonly Product Product2 = new Product
-    {
-        Name = "Apple",
-        CategoryId = 2, // Assuming it's linked to the "Groceries" category
-        Unit = "Kg",
-        Price = 2.99M,
-        ReorderLevel = 50,
-        Discontinued = false,
-    };
+    public static readonly Product TestProduct1 = MakeProduct(
+        id: TestProduct1Id,
+        name: "Smartphone",
+        categoryId: TestCategory1Id,
+        unit: "Pcs",
+        price: 299.99M,
+        reorderLevel: 10,
+        discontinued: false
+    );
 
-    public static List<Product> GenerateMockProducts(int count, Category? category = null)
-    {
-        var products = new List<Product>();
-        for (int i = 1; i <= count; i++)
+    public static readonly Product TestProduct2 = MakeProduct(
+        id: TestProduct2Id,
+        name: "Apple",
+        categoryId: TestCategory2Id,
+        unit: "Kg",
+        price: 2.99M,
+        reorderLevel: 50,
+        discontinued: false
+    );
+
+    public static Product MakeProduct(
+        Guid? id = null,
+        string? name = null,
+        Guid? categoryId = null,
+        string? unit = null,
+        decimal? price = null,
+        short? reorderLevel = null,
+        bool? discontinued = null) =>
+        new Product
         {
-            products.Add(new Product
-            {
-                Name = $"Product {i}",
-                CategoryId = category?.GetHashCode(), // Assuming category might be null
-                Unit = "Pcs",
-                Price = i * 10M, // Mock price generation
-                ReorderLevel = (short)(i * 5),
-                Discontinued = false,
-                Category = category
-            });
-        }
-        return products;
-    }
+            Id = id ?? Guid.NewGuid(),
+            Name = name ?? "Default Product",
+            CategoryId = categoryId ?? Guid.NewGuid(),
+            Unit = unit ?? "Default Unit",
+            Price = price ?? 0.0M,
+            ReorderLevel = reorderLevel ?? 0,
+            Discontinued = discontinued ?? false,
+        };
 }

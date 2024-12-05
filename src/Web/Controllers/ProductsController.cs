@@ -31,7 +31,7 @@ public class ProductsController : BaseController
     }
 
     [HttpPatch("{id}")]
-    public async Task<IActionResult> UpdateProduct([FromRoute] int id, [FromBody] UpdateProductCommand command)
+    public async Task<IActionResult> UpdateProduct([FromRoute] Guid id, [FromBody] UpdateProductCommand command)
     {
         command.Id = id;
 

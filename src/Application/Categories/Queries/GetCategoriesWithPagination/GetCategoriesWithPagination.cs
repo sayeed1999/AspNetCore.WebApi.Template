@@ -12,13 +12,13 @@ public record GetCategoriesWithPaginationQuery : IRequest<PaginatedList<Category
 }
 
 public class GetCategoriesWithPaginationQueryHandler(
-    IApplicationDbContext _context,
-    IMapper _mapper)
+    IApplicationDbContext context,
+    IMapper mapper)
 : IRequestHandler<GetCategoriesWithPaginationQuery, PaginatedList<CategoryDto>>
 {
     public async Task<PaginatedList<CategoryDto>> Handle(GetCategoriesWithPaginationQuery request, CancellationToken cancellationToken)
     {
-        var query = _context.Categories.AsQueryable();
+        var query = context.Categories.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(request.Name))
         {
@@ -28,7 +28,7 @@ public class GetCategoriesWithPaginationQueryHandler(
         return await query
             .Where(x => x.IsDeleted != true)
             .OrderBy(x => x.Name)
-            .ProjectTo<CategoryDto>(_mapper.ConfigurationProvider)
+            .ProjectTo<CategoryDto>(mapper.ConfigurationProvider)
             .PaginatedListAsync(request.PageNumber, request.PageSize);
     }
 }

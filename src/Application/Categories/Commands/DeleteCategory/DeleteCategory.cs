@@ -3,7 +3,7 @@ using AspNetCore.WebApi.Template.Application.Common.Interfaces;
 
 namespace AspNetCore.WebApi.Template.Application.Categories.Commands.DeleteCategory;
 
-public record DeleteCategoryCommand(int Id) : IRequest<CategoryDto>;
+public record DeleteCategoryCommand(Guid Id) : IRequest<CategoryDto>;
 
 public class DeleteCategoryCommandHandler(
     IApplicationDbContext context,

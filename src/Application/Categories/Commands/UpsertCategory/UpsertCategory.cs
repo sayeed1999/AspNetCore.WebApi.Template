@@ -6,7 +6,7 @@ namespace AspNetCore.WebApi.Template.Application.Categories.Commands.UpsertCateg
 
 public record UpsertCategoryCommand : IRequest<CategoryDto>
 {
-    public int Id { get; init; } = 0;
+    public Guid? Id { get; init; }
     public string? Name { get; init; }
 }
 
@@ -19,11 +19,11 @@ public class UpsertCategoryCommandHandler(
     {
         Category? entityInDb = null;
 
-        if (request.Id == 0)
+        if (request.Id is null || request.Id == Guid.Empty)
         {
             if (await context.Categories.AnyAsync(
-                    c => c.Name == request.Name 
-                         && c.IsDeleted != true, 
+                    c => c.Name == request.Name
+                    && c.IsDeleted != true, 
                     cancellationToken))
             {
                 throw new ArgumentException("Category with the specified name already exists.", nameof(request.Name));
@@ -36,9 +36,7 @@ public class UpsertCategoryCommandHandler(
 
             await context.Categories.AddAsync(entityInDb, cancellationToken);
         }
-
-        if (request.Id > 0)
-        {
+        else {
             entityInDb = await context.Categories.SingleOrDefaultAsync(
                         c => c.Id == request.Id && c.IsDeleted != true,
                         cancellationToken);
