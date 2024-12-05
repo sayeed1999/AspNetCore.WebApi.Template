@@ -19,19 +19,15 @@ public class DeleteCategoryTests : TestBase
     public async Task Handle_ShouldSoftDeleteCategory_WhenCategoryExists()
     {
         // Arrange
-        await _context.Categories.AddAsync(TestCategory1);
-        await _context.SaveChangesAsync();
-        
-        // Assert Before Act
         var categoryId = _context.Categories.First().Id;
         var command = new DeleteCategoryCommand(categoryId);
 
         // Act
         var result = await _handler.Handle(command, CancellationToken.None);
 
-        // Assert After Act
+        // Assert
         var deletedCategory = await _context.Categories
-            .Where(c => c.Id == categoryId)
+            .Where(c => c.Id == categoryId && c.IsDeleted == true)
             .SingleOrDefaultAsync();
 
         deletedCategory!.IsDeleted.Should().BeTrue();
@@ -49,7 +45,7 @@ public class DeleteCategoryTests : TestBase
         Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
 
         // Assert
-        await act.Should().ThrowAsync<ArgumentException>() 
+        await act.Should().ThrowAsync<ArgumentException>()
             .WithMessage($"Category with id {nonExistentId} not found (Parameter 'Id')");
     }
 }

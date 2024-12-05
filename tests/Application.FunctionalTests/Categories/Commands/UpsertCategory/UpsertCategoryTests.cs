@@ -1,6 +1,7 @@
 using System;
 using AspNetCore.WebApi.Template.Application.Categories.Commands.UpsertCategory;
 using AspNetCore.WebApi.Template.Application.FunctionalTests.Common;
+using AspNetCore.WebApi.Template.Domain.Entities;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -75,7 +76,7 @@ public class UpsertCategoryTests : TestBase
         Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
 
         // Assert
-        await act.Should().ThrowAsync<NotFoundException>()
-            .WithMessage($"Queried object entityInDB was not found, Key: {nonExistentCategoryId}");
+        await act.Should().ThrowAsync<ArgumentException>()
+            .WithMessage($"{nameof(Category)} with the specified id doesn't exist (Parameter 'Id')");
     }
 }

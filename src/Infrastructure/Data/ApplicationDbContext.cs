@@ -18,8 +18,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     protected override void OnModelCreating(ModelBuilder builder)
     {
         // Global query filter to not load soft deleted items!
-        builder.Entity<Category>().HasQueryFilter(x => x.IsDeleted != true);
-        builder.Entity<Product>().HasQueryFilter(x => x.IsDeleted != true);
+        // builder.Entity<Category>().HasQueryFilter(x => x.IsDeleted != true);
+        // builder.Entity<Product>().HasQueryFilter(x => x.IsDeleted != true);
 
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
