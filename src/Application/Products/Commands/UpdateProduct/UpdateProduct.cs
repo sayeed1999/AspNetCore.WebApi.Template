@@ -12,23 +12,25 @@ public record UpdateProductCommand : IRequest<ProductDto>
 }
 
 public class UpdateProductCommandHandler(
-    IApplicationDbContext _context,
-    IMapper _mapper
+    IApplicationDbContext context,
+    IMapper mapper
 ) : IRequestHandler<UpdateProductCommand, ProductDto>
 {
     public async Task<ProductDto> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Products
-            .FindAsync(new object[] { request.Id }, cancellationToken);
+        var entity = await context.Products.FindAsync([request.Id], cancellationToken);
 
-        Guard.Against.NotFound(request.Id, entity);
+        if (entity == null)
+        {
+            throw new ArgumentException("Product not found", nameof(request.Id));
+        }
 
         // partial update by fields!
         if (!string.IsNullOrWhiteSpace(request.Name)) entity.Name = request.Name;
         if (request.Price != null) entity.Price = request.Price;
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        return _mapper.Map<ProductDto>(entity);
+        return mapper.Map<ProductDto>(entity);
     }
 }

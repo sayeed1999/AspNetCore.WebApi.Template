@@ -1,25 +1,17 @@
 ﻿using AspNetCore.WebApi.Template.Application.Common.Interfaces;
 
-namespace AspNetCore.WebApi.Template.Application.Categories.Commands.CreateCategory;
+namespace AspNetCore.WebApi.Template.Application.Categories.Commands.UpsertCategory;
 
-public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
+public class UpsertCategoryCommandValidator : AbstractValidator<UpsertCategoryCommand>
 {
     private readonly IApplicationDbContext _context;
 
-    public CreateCategoryCommandValidator(IApplicationDbContext context)
+    public UpsertCategoryCommandValidator(IApplicationDbContext context)
     {
         _context = context;
 
         RuleFor(v => v.Name)
             .NotEmpty()
-            .MaximumLength(200)
-            .Must(BeUniqueTitle)
-                .WithMessage("'{PropertyName}' must be unique.")
-                .WithErrorCode("Unique");
+            .MaximumLength(200);
     }
-
-    // ASP.NET validation pipeline is not asynchronous and hence can’t invoke asynchronous rules.
-    // Ref: https://medium.com/cheranga/using-asynchronous-fluent-validations-in-asp-net-api-831710b0b9cd
-    private bool BeUniqueTitle(string title) =>
-        _context.Categories.All(l => l.Name != title && l.IsDeleted != true);
 }

@@ -2,6 +2,9 @@
 
 namespace AspNetCore.WebApi.Template.Application.Products.Commands.CreateProduct;
 
+// Note:-
+// ASP.NET validation pipeline is not asynchronous and hence can’t invoke asynchronous rules.
+
 public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
 {
     private readonly IApplicationDbContext _context;
@@ -12,14 +15,6 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
 
         RuleFor(v => v.Name)
             .MaximumLength(200)
-            .NotEmpty()
-            .Must(BeUniqueTitle)
-                .WithMessage("'{PropertyName}' must be unique.")
-                .WithErrorCode("Unique");
+            .NotEmpty();
     }
-
-    // ASP.NET validation pipeline is not asynchronous and hence can’t invoke asynchronous rules.
-    // Ref: https://medium.com/cheranga/using-asynchronous-fluent-validations-in-asp-net-api-831710b0b9cd
-    public bool BeUniqueTitle(string title) =>
-        _context.Categories.All(l => l.Name != title && l.IsDeleted != true);
 }

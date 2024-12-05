@@ -1,5 +1,5 @@
 using System;
-using AspNetCore.WebApi.Template.Application.Categories.Commands.CreateCategory;
+using AspNetCore.WebApi.Template.Application.Categories.Commands.UpsertCategory;
 using AspNetCore.WebApi.Template.Application.FunctionalTests.Common;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -8,18 +8,18 @@ namespace AspNetCore.WebApi.Template.Application.FunctionalTests.Categories.Comm
 
 public class UpsertCategoryTests : TestBase
 {
-    private readonly CreateCategoryCommandHandler _handler;
+    private readonly UpsertCategoryCommandHandler _handler;
 
     public UpsertCategoryTests()
     {
-        _handler = new CreateCategoryCommandHandler(_context, _mapper);
+        _handler = new UpsertCategoryCommandHandler(_context, _mapper);
     }
 
     [Test]
     public async Task Handle_ShouldCreateNewCategory_WhenCategoryDoesNotExist()
     {
         // Arrange
-        var command = new CreateCategoryCommand
+        var command = new UpsertCategoryCommand
         {
             Id = 0,
             Name = "New Category"
@@ -41,7 +41,7 @@ public class UpsertCategoryTests : TestBase
     {
         // Arrange
         var existingCategory = _context.Categories.First();
-        var command = new CreateCategoryCommand
+        var command = new UpsertCategoryCommand
         {
             Id = existingCategory.Id,
             Name = "Updated Category"
@@ -65,7 +65,7 @@ public class UpsertCategoryTests : TestBase
     {
         // Arrange
         var nonExistentCategoryId = 999; // An ID that does not exist
-        var command = new CreateCategoryCommand
+        var command = new UpsertCategoryCommand
         {
             Id = nonExistentCategoryId,
             Name = "Non-Existent Category"

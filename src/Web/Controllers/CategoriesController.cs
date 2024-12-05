@@ -1,4 +1,4 @@
-using AspNetCore.WebApi.Template.Application.Categories.Commands.CreateCategory;
+using AspNetCore.WebApi.Template.Application.Categories.Commands.UpsertCategory;
 using AspNetCore.WebApi.Template.Application.Categories.Commands.DeleteCategory;
 using AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
 using AspNetCore.WebApi.Template.Application.Common.Models;
@@ -24,7 +24,7 @@ public class CategoriesController : BaseController
     }
 
     [HttpPost]
-    public async Task<IActionResult> UpsertCategory(CreateCategoryCommand command)
+    public async Task<IActionResult> UpsertCategory(UpsertCategoryCommand command)
     {
         var result = await Mediator.Send(command);
 

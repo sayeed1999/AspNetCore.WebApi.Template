@@ -2,49 +2,58 @@
 using AspNetCore.WebApi.Template.Application.Common.Interfaces;
 using AspNetCore.WebApi.Template.Domain.Entities;
 
-namespace AspNetCore.WebApi.Template.Application.Categories.Commands.CreateCategory;
+namespace AspNetCore.WebApi.Template.Application.Categories.Commands.UpsertCategory;
 
-public record CreateCategoryCommand : IRequest<CategoryDto>
+public record UpsertCategoryCommand : IRequest<CategoryDto>
 {
-    public int Id { get; set; } = 0;
+    public int Id { get; init; } = 0;
     public string? Name { get; init; }
 }
 
-public class CreateCategoryCommandHandler(
-    IApplicationDbContext _context,
-    IMapper _mapper)
-: IRequestHandler<CreateCategoryCommand, CategoryDto>
+public class UpsertCategoryCommandHandler(
+    IApplicationDbContext context,
+    IMapper mapper)
+: IRequestHandler<UpsertCategoryCommand, CategoryDto>
 {
-    public async Task<CategoryDto> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+    public async Task<CategoryDto> Handle(UpsertCategoryCommand request, CancellationToken cancellationToken)
     {
-        Category? entityInDB = null;
+        Category? entityInDb = null;
 
-        if (request.Id > 0)
+        if (request.Id == 0)
         {
-            entityInDB = await _context.Categories.FirstOrDefaultAsync(
-                        c => c.Id == request.Id && c.IsDeleted != true,
-                        cancellationToken);
-
-            Guard.Against.NotFound(request.Id, entityInDB);
-        }
-
-        if (entityInDB is null)
-        {
-            entityInDB = new Category()
+            if (await context.Categories.AnyAsync(
+                    c => c.Name == request.Name 
+                         && c.IsDeleted != true, 
+                    cancellationToken))
+            {
+                throw new ArgumentException("Category with the specified name already exists.", nameof(request.Name));
+            }
+            
+            entityInDb = new Category()
             {
                 Name = request.Name,
             };
 
-            await _context.Categories.AddAsync(entityInDB);
+            await context.Categories.AddAsync(entityInDb, cancellationToken);
         }
-        else
+
+        if (request.Id > 0)
         {
-            entityInDB.Name = request.Name;
+            entityInDb = await context.Categories.SingleOrDefaultAsync(
+                        c => c.Id == request.Id && c.IsDeleted != true,
+                        cancellationToken);
+
+            if (entityInDb == null)
+            {
+                throw new ArgumentException("Category with the specified id doesn't exist", nameof(request.Id));
+            }
+            
+            entityInDb.Name = request.Name;
         }
+        
+        await context.SaveChangesAsync(cancellationToken);
 
-        await _context.SaveChangesAsync(cancellationToken);
-
-        var dto = _mapper.Map<CategoryDto>(entityInDB);
+        var dto = mapper.Map<CategoryDto>(entityInDb);
         return dto;
     }
 }

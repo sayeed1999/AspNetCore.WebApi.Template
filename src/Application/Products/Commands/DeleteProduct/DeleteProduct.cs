@@ -6,26 +6,27 @@ namespace AspNetCore.WebApi.Template.Application.Products.Commands.DeleteProduct
 
 public record DeleteProductCommand(int Id) : IRequest<ProductDto>;
 
+// Note:- Soft delete is safer for real business.
+// Hard delete should only be done with background job after a specific period of time.
 public class DeleteProductCommandHandler(
-    IApplicationDbContext _context,
-    IMapper _mapper
+    IApplicationDbContext context,
+    IMapper mapper
 ) : IRequestHandler<DeleteProductCommand, ProductDto>
 {
     public async Task<ProductDto> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _context.Products
-            .FindAsync(new object[] { request.Id }, cancellationToken);
+        var entity = await context.Products.FindAsync([request.Id], cancellationToken);
 
-        Guard.Against.NotFound(request.Id, entity);
+        if (entity == null)
+        {
+            throw new ArgumentException("Product not found", nameof(request.Id));
+        }
 
-        // Note:- Soft delete is safer for real business. 
-        // Hard delete should only be done with background job after a specific period of time.
         entity.IsDeleted = true;
-        // _context.Products.Remove(entity);
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await context.SaveChangesAsync(cancellationToken);
 
-        return _mapper.Map<ProductDto>(entity);
+        return mapper.Map<ProductDto>(entity);
     }
 
 }
