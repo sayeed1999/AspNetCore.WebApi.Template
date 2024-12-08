@@ -37,7 +37,7 @@ app.UseHttpsRedirection();
 
 app.MapStaticAssets();
 
-app.UseHealthChecks("/health");
+app.MapHealthChecks("/health").DisableHttpMetrics();
 
 app.UseAuthorization();
 

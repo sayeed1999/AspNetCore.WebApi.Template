@@ -34,6 +34,8 @@ public static class DependencyInjection
         services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
 
+        services.AddOpenApi();
+        services.AddOpenApiDocument();
         services.RegisterSwagger(nameof(AspNetCore.WebApi.Template));
 
         return services;

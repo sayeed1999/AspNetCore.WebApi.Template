@@ -21,8 +21,6 @@ public class DeleteCategoryCommandHandler(
             throw new ArgumentException($"Category with id {request.Id} not found", nameof(request.Id));
         }
 
-        Guard.Against.NotFound(request.Id, entity);
-
         entity.IsDeleted = true; // Soft deletion
 
         await context.SaveChangesAsync(cancellationToken);
