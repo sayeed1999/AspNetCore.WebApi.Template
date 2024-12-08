@@ -1,4 +1,3 @@
-using AspNetCore.WebApi.Template.Infrastructure.Data;
 using AspNetCore.WebApi.Template.Infrastructure.Identity;
 using static AspNetCore.WebApi.Template.DependencyInjection;
 
@@ -36,7 +35,7 @@ app.UseCustomExceptionHandler();
 app.UseHttpsRedirection();
 #endif
 
-app.UseStaticFiles();
+app.MapStaticAssets();
 
 app.UseHealthChecks("/health");
 
