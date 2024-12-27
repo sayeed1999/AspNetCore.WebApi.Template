@@ -1,10 +1,11 @@
 using AspNetCore.WebApi.Template.Infrastructure.Identity;
+using AspNetCore.WebApi.Template.Web.Infrastructure;
 using static AspNetCore.WebApi.Template.DependencyInjection;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration
-    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddJsonFile("appsettings.json", true, true)
     .AddEnvironmentVariables();
 
 // Add services to the container.
@@ -14,7 +15,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddWebServices();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -29,8 +30,6 @@ if (builder.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCustomExceptionHandler();
-
 #if DEBUG
 app.UseHttpsRedirection();
 #endif
@@ -41,10 +40,15 @@ app.MapHealthChecks("/health").DisableHttpMetrics();
 
 app.UseAuthorization();
 
+app.UseExceptionHandler(options => { });
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+
 app.MapControllers();
 
 app.MapIdentityApi<ApplicationUser>();
 
 app.Run();
 
-public partial class Program { }
+public partial class Program
+{
+}

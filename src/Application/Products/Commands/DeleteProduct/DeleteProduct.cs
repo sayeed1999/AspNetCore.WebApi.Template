@@ -1,6 +1,7 @@
-﻿using AspNetCore.WebApi.Template.Application.Common.Interfaces;
+﻿using AspNetCore.WebApi.Template.Application.Common.Exceptions;
+using AspNetCore.WebApi.Template.Application.Common.Interfaces;
 using AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWithPagination;
-using AspNetCore.WebApi.Template.Domain.Events;
+using AspNetCore.WebApi.Template.Domain.Entities;
 
 namespace AspNetCore.WebApi.Template.Application.Products.Commands.DeleteProduct;
 
@@ -15,18 +16,14 @@ public class DeleteProductCommandHandler(
 {
     public async Task<ProductDto> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        var entity = await context.Products.FindAsync([request.Id], cancellationToken);
+        Product? entity = await context.Products.FindAsync([request.Id], cancellationToken);
 
-        if (entity == null)
-        {
-            throw new ArgumentException("Product not found", nameof(request.Id));
-        }
+        NotFoundException.ThrowIfNull(entity);
 
-        entity.IsDeleted = true;
+        entity!.IsDeleted = true;
 
         await context.SaveChangesAsync(cancellationToken);
 
         return mapper.Map<ProductDto>(entity);
     }
-
 }

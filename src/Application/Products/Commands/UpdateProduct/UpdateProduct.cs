@@ -1,5 +1,7 @@
-﻿using AspNetCore.WebApi.Template.Application.Common.Interfaces;
+﻿using AspNetCore.WebApi.Template.Application.Common.Exceptions;
+using AspNetCore.WebApi.Template.Application.Common.Interfaces;
 using AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWithPagination;
+using AspNetCore.WebApi.Template.Domain.Entities;
 
 namespace AspNetCore.WebApi.Template.Application.Products.Commands.UpdateProduct;
 
@@ -8,7 +10,6 @@ public record UpdateProductCommand : IRequest<ProductDto>
     public Guid Id { get; set; }
     public string? Name { get; init; }
     public decimal? Price { get; init; }
-
 }
 
 public class UpdateProductCommandHandler(
@@ -18,16 +19,21 @@ public class UpdateProductCommandHandler(
 {
     public async Task<ProductDto> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
-        var entity = await context.Products.FindAsync([request.Id], cancellationToken);
+        Product? entity = await context.Products.FindAsync([request.Id], cancellationToken);
 
-        if (entity == null)
+        NotFoundException.ThrowIfNull(entity);
+
+        // partial update by fields...
+
+        if (!string.IsNullOrWhiteSpace(request.Name))
         {
-            throw new ArgumentException("Product not found", nameof(request.Id));
+            entity!.Name = request.Name;
         }
 
-        // partial update by fields!
-        if (!string.IsNullOrWhiteSpace(request.Name)) entity.Name = request.Name;
-        if (request.Price != null) entity.Price = request.Price;
+        if (request.Price != null)
+        {
+            entity!.Price = request.Price;
+        }
 
         await context.SaveChangesAsync(cancellationToken);
 

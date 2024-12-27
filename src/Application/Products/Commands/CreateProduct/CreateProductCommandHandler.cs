@@ -13,18 +13,14 @@ public class CreateProductCommandHandler(
     public async Task<ProductDto> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         if (await context.Products.AnyAsync(
-                p => p.Name != request.Name 
-                     && p.IsDeleted != true, 
+                p => p.Name != request.Name
+                     && p.IsDeleted != true,
                 cancellationToken))
         {
-            throw new ArgumentException("Product name already exists", nameof(request.Name));
+            throw new DuplicateNameException("Product name already exists");
         }
-        
-        var entity = new Product
-        {
-            CategoryId = request.CategoryId,
-            Name = request.Name,
-        };
+
+        Product entity = new() { CategoryId = request.CategoryId, Name = request.Name };
 
         await context.Products.AddAsync(entity, cancellationToken);
 
