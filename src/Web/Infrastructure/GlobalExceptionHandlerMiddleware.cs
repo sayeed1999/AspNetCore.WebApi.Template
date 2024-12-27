@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Data;
+using System.Net;
 using System.Text.Json;
 
 namespace AspNetCore.WebApi.Template.Web.Infrastructure;
@@ -23,8 +24,16 @@ public class GlobalExceptionHandlerMiddleware(RequestDelegate next)
 
     private Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        HttpStatusCode code = HttpStatusCode.InternalServerError;
         string result = string.Empty;
+
+        HttpStatusCode code = exception switch
+        {
+            ArgumentNullException => HttpStatusCode.BadRequest,
+            InvalidOperationException => HttpStatusCode.BadRequest,
+            DuplicateNameException => HttpStatusCode.Conflict,
+            // add more types that are not handled by IExceptionHandler and should have changed HttpStatusCode
+            _ => HttpStatusCode.InternalServerError
+        };
 
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)code;

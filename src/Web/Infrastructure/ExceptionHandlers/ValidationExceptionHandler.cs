@@ -18,7 +18,7 @@ public class ValidationExceptionHandler : IExceptionHandler
             await httpContext.Response.WriteAsJsonAsync(
                 new ValidationProblemDetails(ex.Errors)
                 {
-                    Status = StatusCodes.Status400BadRequest,
+                    Status = StatusCodes.Status422UnprocessableEntity,
                     Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
                 }, cancellationToken);
 
