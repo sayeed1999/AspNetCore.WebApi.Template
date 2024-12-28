@@ -34,10 +34,11 @@ public static class DependencyInjection
         services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
 
+        services.AddExceptionHandler<UnauthorizedAccessExceptionHandler>();
         services.AddExceptionHandler<ForbiddenAccessExceptionHandler>();
         services.AddExceptionHandler<NotFoundExceptionHandler>();
-        services.AddExceptionHandler<UnauthorizedAccessExceptionHandler>();
         services.AddExceptionHandler<ValidationExceptionHandler>();
+        services.AddExceptionHandler<GlobalExceptionHandler>();
 
         services.AddOpenApi();
         services.AddOpenApiDocument();

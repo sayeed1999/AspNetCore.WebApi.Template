@@ -1,5 +1,4 @@
 using AspNetCore.WebApi.Template.Infrastructure.Identity;
-using AspNetCore.WebApi.Template.Web.Infrastructure;
 using static AspNetCore.WebApi.Template.DependencyInjection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -40,8 +39,8 @@ app.MapHealthChecks("/health").DisableHttpMetrics();
 
 app.UseAuthorization();
 
-app.UseExceptionHandler(options => { });
-app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
+app.UseExceptionHandler();
+// app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.MapControllers();
 

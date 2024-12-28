@@ -1,10 +1,12 @@
 ﻿using System.Data;
 using System.Net;
 using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCore.WebApi.Template.Web.Infrastructure;
 
 /// <summary>
+///     Global Exception handler using old way (not used currently due to using IExceptionHandlers for exceptions..
 ///     Responsible for handling unhandled exceptions in the entire system as the last fallback for exceptions.
 /// </summary>
 /// <param name="next"></param>
@@ -25,14 +27,37 @@ public class GlobalExceptionHandlerMiddleware(RequestDelegate next)
     private Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
         string result = string.Empty;
+        string title = string.Empty;
+        string type = string.Empty;
+        HttpStatusCode code = HttpStatusCode.InternalServerError;
 
-        HttpStatusCode code = exception switch
+        switch (exception)
         {
-            ArgumentNullException => HttpStatusCode.BadRequest,
-            InvalidOperationException => HttpStatusCode.BadRequest,
-            DuplicateNameException => HttpStatusCode.Conflict,
-            // add more types that are not handled by IExceptionHandler and should have changed HttpStatusCode
-            _ => HttpStatusCode.InternalServerError
+            case ArgumentNullException:
+                code = HttpStatusCode.BadRequest;
+                title = "Bad Request";
+                type = "https://httpstatuses.com/400";
+                break;
+            case InvalidOperationException:
+                code = HttpStatusCode.BadRequest;
+                title = "Bad Request";
+                type = "https://httpstatuses.com/400";
+                break;
+            case DuplicateNameException:
+                code = HttpStatusCode.Conflict;
+                title = "Conflict";
+                type = "https://httpstatuses.com/409";
+                break;
+            default:
+                code = HttpStatusCode.InternalServerError;
+                title = "Internal Server Error";
+                type = "https://httpstatuses.com/500";
+                break;
+        }
+
+        ProblemDetails problemDetails = new()
+        {
+            Status = (int?)code, Title = title, Type = type, Detail = exception.Message
         };
 
         context.Response.ContentType = "application/json";
@@ -40,10 +65,7 @@ public class GlobalExceptionHandlerMiddleware(RequestDelegate next)
 
         if (string.IsNullOrEmpty(result))
         {
-            result = JsonSerializer.Serialize(new
-            {
-                message = exception.Message, exception = exception.InnerException
-            });
+            result = JsonSerializer.Serialize(problemDetails);
         }
 
         return context.Response.WriteAsync(result);
