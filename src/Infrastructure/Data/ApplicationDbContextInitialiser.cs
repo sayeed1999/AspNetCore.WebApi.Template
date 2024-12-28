@@ -1,11 +1,7 @@
-﻿using System.Runtime.InteropServices;
-using AspNetCore.WebApi.Template.Domain.Constants;
-using AspNetCore.WebApi.Template.Domain.Entities;
+﻿using AspNetCore.WebApi.Template.Domain.Entities;
 using AspNetCore.WebApi.Template.Infrastructure.Identity;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace AspNetCore.WebApi.Template.Infrastructure.Data;
@@ -23,12 +19,14 @@ namespace AspNetCore.WebApi.Template.Infrastructure.Data;
 
 public class ApplicationDbContextInitialiser
 {
-    private readonly ILogger<ApplicationDbContextInitialiser> _logger;
     private readonly ApplicationDbContext _context;
-    private readonly UserManager<ApplicationUser> _userManager;
+    private readonly ILogger<ApplicationDbContextInitialiser> _logger;
     private readonly RoleManager<ApplicationRole> _roleManager;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public ApplicationDbContextInitialiser(ILogger<ApplicationDbContextInitialiser> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+    public ApplicationDbContextInitialiser(ILogger<ApplicationDbContextInitialiser> logger,
+        ApplicationDbContext context, UserManager<ApplicationUser> userManager,
+        RoleManager<ApplicationRole> roleManager)
     {
         _logger = logger;
         _context = context;
@@ -65,7 +63,7 @@ public class ApplicationDbContextInitialiser
     public async Task TrySeedAsync()
     {
         // Default roles
-        var administratorRole = new ApplicationRole(Roles.Administrator);
+        ApplicationRole administratorRole = new() { Name = "Administrator" };
 
         if (_roleManager.Roles.All(r => r.Name != administratorRole.Name))
         {
@@ -73,7 +71,8 @@ public class ApplicationDbContextInitialiser
         }
 
         // Default users
-        var administrator = new ApplicationUser { UserName = "administrator@localhost", Email = "administrator@localhost" };
+        ApplicationUser administrator =
+            new() { UserName = "administrator@localhost", Email = "administrator@localhost" };
 
         if (_userManager.Users.All(u => u.UserName != administrator.UserName))
         {
@@ -93,19 +92,19 @@ public class ApplicationDbContextInitialiser
                 {
                     Name = "Pen",
                     Products =
-                {
-                    new Product { Name = "Matador Ball Pen", Price = 5 },
-                    new Product { Name = "Matador Gel Pen", Price = 6 }
-                },
+                    {
+                        new Product { Name = "Matador Ball Pen", Price = 5 },
+                        new Product { Name = "Matador Gel Pen", Price = 6 }
+                    }
                 },
                 new Category
                 {
                     Name = "Pencil",
                     Products =
-                {
-                    new Product { Name = "Matador HB Pencil", Price = 7 },
-                    new Product { Name = "Matador 2B Pen", Price = 7 }
-                },
+                    {
+                        new Product { Name = "Matador HB Pencil", Price = 7 },
+                        new Product { Name = "Matador 2B Pen", Price = 7 }
+                    }
                 });
 
             await _context.SaveChangesAsync();

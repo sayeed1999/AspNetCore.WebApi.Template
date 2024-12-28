@@ -6,8 +6,6 @@ namespace AspNetCore.WebApi.Template.Application.FunctionalTests.Common;
 
 public class ApplicationDbContextFactory
 {
-    // private static PostgreSqlContainer _postgreSqlContainer = null!;
-
     public static ApplicationDbContext Create()
     {
         DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>()
