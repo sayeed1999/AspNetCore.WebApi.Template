@@ -8,7 +8,8 @@ using Microsoft.EntityFrameworkCore;
 namespace AspNetCore.WebApi.Template.Infrastructure.Data;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-    : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>(options), IApplicationDbContext
+    : IdentityDbContext<ApplicationUser, ApplicationRole, Guid, ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin, ApplicationRoleClaim, ApplicationUserToken>(options),
+    IApplicationDbContext
 {
     public DbSet<Category> Categories => Set<Category>();
 

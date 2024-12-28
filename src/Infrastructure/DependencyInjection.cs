@@ -1,4 +1,5 @@
-﻿using AspNetCore.WebApi.Template.Application.Common.Interfaces;
+﻿using System.IdentityModel.Tokens.Jwt;
+using AspNetCore.WebApi.Template.Application.Common.Interfaces;
 using AspNetCore.WebApi.Template.Domain.Constants;
 using AspNetCore.WebApi.Template.Infrastructure.Data;
 using AspNetCore.WebApi.Template.Infrastructure.Data.Interceptors;
@@ -41,10 +42,9 @@ public static class DependencyInjection
 
         services.AddAuthorizationBuilder();
 
-        services
-            .AddIdentityCore<ApplicationUser>()
-            .AddRoles<IdentityRole>()
+        services.AddIdentity<ApplicationUser, ApplicationRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders()
             .AddApiEndpoints();
 
         services.AddSingleton(TimeProvider.System);

@@ -1,4 +1,4 @@
-namespace AspNetCore.WebApi.Template.Application.FunctionalTests.Common;
+namespace Application.IntegrationTests.TestDatabase;
 
 public class TestDatabaseFactory
 {

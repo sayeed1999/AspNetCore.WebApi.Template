@@ -1,3 +1,4 @@
+using Application.IntegrationTests.TestDatabase;
 using AspNetCore.WebApi.Template.Domain.Constants;
 using AspNetCore.WebApi.Template.Infrastructure.Data;
 using AspNetCore.WebApi.Template.Infrastructure.Identity;
@@ -6,13 +7,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AspNetCore.WebApi.Template.Application.FunctionalTests.Common;
+namespace Application.IntegrationTests;
 
 [SetUpFixture]
 public class Testing
 {
     private static ITestDatabase _database = null!;
-    private static CustomWebApplicationFactory _factory = null!;
+    private static IntegrationTestWebAppFactory _factory = null!;
     private static IServiceScopeFactory _scopeFactory = null!;
     private static Guid? _userId;
 
@@ -21,7 +22,7 @@ public class Testing
     {
         _database = await TestDatabaseFactory.CreateAsync();
 
-        _factory = new CustomWebApplicationFactory(
+        _factory = new IntegrationTestWebAppFactory(
             _database.GetConnection());
 
         _scopeFactory = _factory.Services.GetRequiredService<IServiceScopeFactory>();

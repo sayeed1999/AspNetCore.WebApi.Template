@@ -6,21 +6,10 @@ namespace AspNetCore.WebApi.Template.Application.FunctionalTests.Common;
 
 public class ApplicationDbContextFactory
 {
-    // private static PostgreSqlContainer _postgreSqlContainer = null!;
-
     public static ApplicationDbContext Create()
     {
-        // _postgreSqlContainer = new PostgreSqlBuilder()
-        //     .WithDatabase("testdb")
-        //     .WithUsername("testuser")
-        //     .WithPassword("testpass")
-        //     .Build();
-        //
-        // _postgreSqlContainer.StartAsync().GetAwaiter().GetResult();
-
         DbContextOptions<ApplicationDbContext> options = new DbContextOptionsBuilder<ApplicationDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString()) // when using in-memory database
-            //.UseNpgsql(_postgreSqlContainer.GetConnectionString())
             .Options;
 
         ApplicationDbContext context = new(options);

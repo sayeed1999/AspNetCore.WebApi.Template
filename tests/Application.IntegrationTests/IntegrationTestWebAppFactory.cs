@@ -9,10 +9,11 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
+using Moq;
 
-namespace AspNetCore.WebApi.Template.Application.FunctionalTests.Common;
+namespace Application.IntegrationTests;
 
-public class CustomWebApplicationFactory(DbConnection connection)
+public class IntegrationTestWebAppFactory(DbConnection connection)
     : WebApplicationFactory<Program>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
