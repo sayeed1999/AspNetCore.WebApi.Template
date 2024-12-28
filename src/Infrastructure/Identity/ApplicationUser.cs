@@ -2,6 +2,6 @@
 
 namespace AspNetCore.WebApi.Template.Infrastructure.Identity;
 
-public class ApplicationUser : IdentityUser
+public class ApplicationUser : IdentityUser<Guid>
 {
 }
