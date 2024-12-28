@@ -1,7 +1,9 @@
 using AspNetCore.WebApi.Template.Application.Categories.Commands.DeleteCategory;
+using AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
+using AspNetCore.WebApi.Template.Application.Common.Exceptions;
 using AspNetCore.WebApi.Template.Application.FunctionalTests.Common;
+using AspNetCore.WebApi.Template.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using static Domain.UnitTests.ConstantData;
 
 namespace AspNetCore.WebApi.Template.Application.FunctionalTests.Categories.Commands.DeleteCategory;
 
@@ -19,14 +21,14 @@ public class DeleteCategoryTests : TestBase
     public async Task Handle_ShouldSoftDeleteCategory_WhenCategoryExists()
     {
         // Arrange
-        var categoryId = _context.Categories.First().Id;
-        var command = new DeleteCategoryCommand(categoryId);
+        Guid categoryId = _context.Categories.First().Id;
+        DeleteCategoryCommand command = new(categoryId);
 
         // Act
-        var result = await _handler.Handle(command, CancellationToken.None);
+        CategoryDto result = await _handler.Handle(command, CancellationToken.None);
 
         // Assert
-        var deletedCategory = await _context.Categories
+        Category? deletedCategory = await _context.Categories
             .Where(c => c.Id == categoryId && c.IsDeleted == true)
             .SingleOrDefaultAsync();
 
@@ -38,14 +40,14 @@ public class DeleteCategoryTests : TestBase
     public async Task Handle_ShouldThrowNotFound_WhenCategoryDoesNotExist()
     {
         // Arrange
-        var nonExistentId = Guid.NewGuid(); // Any ID that doesn't exist in mock in-memory database
-        var command = new DeleteCategoryCommand(nonExistentId);
+        Guid nonExistentId = Guid.NewGuid(); // Any ID that doesn't exist in mock in-memory database
+        DeleteCategoryCommand command = new(nonExistentId);
 
         // Act
         Func<Task> act = async () => await _handler.Handle(command, CancellationToken.None);
 
         // Assert
-        await act.Should().ThrowAsync<ArgumentException>()
-            .WithMessage($"Category with id {nonExistentId} not found (Parameter 'Id')");
+        await act.Should().ThrowAsync<NotFoundException>()
+            .WithMessage("Item with the specified id is not found.");
     }
 }
