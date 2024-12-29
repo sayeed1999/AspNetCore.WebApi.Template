@@ -1,6 +1,7 @@
 using System.Data.Common;
 using AspNetCore.WebApi.Template.Application.Common.Interfaces;
 using AspNetCore.WebApi.Template.Infrastructure.Data;
+using AspNetCore.WebApi.Template.Web.Workers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
+using Microsoft.Extensions.Hosting;
 using Moq;
 
 namespace Application.IntegrationTests;
@@ -21,6 +22,7 @@ public class IntegrationTestWebAppFactory(DbConnection connection)
         builder.ConfigureTestServices(services =>
         {
             services
+                .RemoveAll<IHostedService>()
                 .RemoveAll<IUser>()
                 .AddTransient(provider => Mock.Of<IUser>(s => s.Id == Testing.GetUserId()));
 

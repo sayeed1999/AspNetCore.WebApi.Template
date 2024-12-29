@@ -22,8 +22,7 @@ public class Testing
     {
         _database = await TestDatabaseFactory.CreateAsync();
 
-        _factory = new IntegrationTestWebAppFactory(
-            _database.GetConnection());
+        _factory = new IntegrationTestWebAppFactory(_database.GetConnection());
 
         _scopeFactory = _factory.Services.GetRequiredService<IServiceScopeFactory>();
     }
@@ -51,16 +50,15 @@ public class Testing
         return _userId;
     }
 
-    public static Task<Guid?> RunAsDefaultUserAsync()
+    public static async Task<Guid?> RunAsDefaultUserAsync()
     {
-        return RunAsUserAsync("test@local", "Testing1234!", []);
+        return await RunAsUserAsync("test@local", "Testing1234!", Array.Empty<string>());
     }
 
-    public static Task<Guid?> RunAsAdministratorAsync()
+    public static async Task<Guid?> RunAsAdministratorAsync()
     {
-        return RunAsUserAsync("administrator@local", "Administrator1234!", [Roles.Administrator]);
+        return await RunAsUserAsync("administrator@local", "Administrator1234!", new[] { Roles.Administrator });
     }
-
 
     private static async Task<Guid?> RunAsUserAsync(string userName, string password, string[] roles)
     {
@@ -75,12 +73,12 @@ public class Testing
 
         if (roles.Any())
         {
-            RoleManager<IdentityRole> roleManager =
-                scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            RoleManager<ApplicationRole> roleManager =
+                scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
             foreach (string role in roles)
             {
-                await roleManager.CreateAsync(new IdentityRole(role));
+                await roleManager.CreateAsync(new ApplicationRole { Name = role });
             }
 
             await userManager.AddToRolesAsync(user, roles);
@@ -93,7 +91,7 @@ public class Testing
             return _userId;
         }
 
-        string? errors = string.Join(Environment.NewLine, result.ToApplicationResult().Errors);
+        string errors = string.Join(Environment.NewLine, result.ToApplicationResult().Errors);
 
         throw new Exception($"Unable to create {userName}.{Environment.NewLine}{errors}");
     }

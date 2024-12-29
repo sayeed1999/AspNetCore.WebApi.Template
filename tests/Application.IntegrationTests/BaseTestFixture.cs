@@ -1,11 +1,13 @@
 namespace Application.IntegrationTests;
 
+using static Testing;
+
 [TestFixture]
-public class BaseTestFixture
+public abstract class BaseTestFixture
 {
     [SetUp]
     public async Task TestSetUp()
     {
-        await Testing.ResetState();
+        await ResetState();
     }
 }

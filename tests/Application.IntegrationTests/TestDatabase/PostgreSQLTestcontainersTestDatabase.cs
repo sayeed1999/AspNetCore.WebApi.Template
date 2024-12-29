@@ -11,6 +11,8 @@ namespace Application.IntegrationTests.TestDatabase;
 public class PostgreSqlTestcontainersTestDatabase : ITestDatabase
 {
     private const string DefaultDatabase = "TestDb";
+    private const string DefaultUsername = "testuser";
+    private const string DefaultPassword = "testpass";
     private readonly PostgreSqlContainer _container;
     private DbConnection _connection = null!;
     private string _connectionString = null!;
@@ -19,6 +21,9 @@ public class PostgreSqlTestcontainersTestDatabase : ITestDatabase
     public PostgreSqlTestcontainersTestDatabase()
     {
         _container = new PostgreSqlBuilder()
+            .WithDatabase(DefaultDatabase)
+            .WithUsername(DefaultUsername)
+            .WithPassword(DefaultPassword)
             .WithAutoRemove(true)
             .Build();
     }
@@ -49,11 +54,8 @@ public class PostgreSqlTestcontainersTestDatabase : ITestDatabase
     public async Task InitializeAsync()
     {
         await _container.StartAsync();
-        await _container.ExecScriptAsync($"CREATE DATABASE {DefaultDatabase}");
 
-        NpgsqlConnectionStringBuilder? builder = new(_container.GetConnectionString()) { Database = DefaultDatabase };
-
-        _connectionString = builder.ConnectionString;
+        _connectionString = _container.GetConnectionString();
 
         _connection = new NpgsqlConnection(_connectionString);
 

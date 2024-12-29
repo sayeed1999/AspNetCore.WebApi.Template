@@ -1,15 +1,10 @@
-﻿using AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
+﻿using System.Data;
+using AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
 using AspNetCore.WebApi.Template.Application.Common.Exceptions;
 using AspNetCore.WebApi.Template.Application.Common.Interfaces;
 using AspNetCore.WebApi.Template.Domain.Entities;
 
 namespace AspNetCore.WebApi.Template.Application.Categories.Commands.UpsertCategory;
-
-public record UpsertCategoryCommand : IRequest<CategoryDto>
-{
-    public Guid? Id { get; init; }
-    public string? Name { get; init; }
-}
 
 public class UpsertCategoryCommandHandler(
     IApplicationDbContext context,
@@ -18,7 +13,7 @@ public class UpsertCategoryCommandHandler(
 {
     public async Task<CategoryDto> Handle(UpsertCategoryCommand request, CancellationToken cancellationToken)
     {
-        Category? entityInDb = null;
+        Category? entityInDb;
 
         if (request.Id is null || request.Id == Guid.Empty)
         {
@@ -27,7 +22,7 @@ public class UpsertCategoryCommandHandler(
                          && c.IsDeleted != true,
                     cancellationToken))
             {
-                throw new NotFoundException("Category with the specified name already exists.");
+                throw new DuplicateNameException("Category name is already taken.");
             }
 
             entityInDb = new Category { Name = request.Name };
