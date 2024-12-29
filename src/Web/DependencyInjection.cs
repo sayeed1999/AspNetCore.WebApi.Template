@@ -2,7 +2,7 @@
 using AspNetCore.WebApi.Template.Application.Common.Interfaces;
 using AspNetCore.WebApi.Template.Infrastructure.Data;
 using AspNetCore.WebApi.Template.Web.Extensions;
-using AspNetCore.WebApi.Template.Web.Infrastructure.ExceptionHandlers;
+using AspNetCore.WebApi.Template.Web.Infrastructure;
 using AspNetCore.WebApi.Template.Web.Services;
 using AspNetCore.WebApi.Template.Web.Workers;
 using Azure.Identity;
@@ -34,11 +34,8 @@ public static class DependencyInjection
         services.Configure<ApiBehaviorOptions>(options =>
             options.SuppressModelStateInvalidFilter = true);
 
-        services.AddExceptionHandler<UnauthorizedAccessExceptionHandler>();
-        services.AddExceptionHandler<ForbiddenAccessExceptionHandler>();
-        services.AddExceptionHandler<NotFoundExceptionHandler>();
-        services.AddExceptionHandler<ValidationExceptionHandler>();
         services.AddExceptionHandler<GlobalExceptionHandler>();
+        services.AddProblemDetails();
 
         services.AddOpenApi();
         services.AddOpenApiDocument();
