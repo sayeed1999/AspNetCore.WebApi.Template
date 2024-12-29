@@ -13,6 +13,10 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
     {
         _context = context;
 
+        RuleFor(v => v.CategoryId)
+            .Must(v => v.HasValue && v.Value != Guid.Empty)
+            .When(v => v.CategoryId != null);
+
         RuleFor(v => v.Name)
             .MaximumLength(200)
             .NotEmpty();

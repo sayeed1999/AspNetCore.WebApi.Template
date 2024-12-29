@@ -4,11 +4,11 @@ namespace AspNetCore.WebApi.Template.Application.Categories.Commands.UpsertCateg
 
 public class UpsertCategoryCommandValidator : AbstractValidator<UpsertCategoryCommand>
 {
-    private readonly IApplicationDbContext _context;
-
     public UpsertCategoryCommandValidator(IApplicationDbContext context)
     {
-        _context = context;
+        RuleFor(v => v.Id)
+            .Must(v => v.HasValue && v.Value != Guid.Empty)
+            .When(v => v.Id != null);
 
         RuleFor(v => v.Name)
             .NotEmpty()

@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCore.WebApi.Template.Application.FunctionalTests.Categories.Commands.UpsertCategory;
 
-public class UpsertCategoryTests : TestBase
+public class UpsertCategoryCommandTests : TestBase
 {
     private readonly UpsertCategoryCommandHandler _handler;
 
-    public UpsertCategoryTests()
+    public UpsertCategoryCommandTests()
     {
         _handler = new UpsertCategoryCommandHandler(_context, _mapper);
     }
