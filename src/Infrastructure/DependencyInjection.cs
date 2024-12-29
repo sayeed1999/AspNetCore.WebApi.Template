@@ -1,9 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using AspNetCore.WebApi.Template.Application.Common.Interfaces;
-using AspNetCore.WebApi.Template.Domain.Constants;
-using AspNetCore.WebApi.Template.Infrastructure.Data;
-using AspNetCore.WebApi.Template.Infrastructure.Data.Interceptors;
-using AspNetCore.WebApi.Template.Infrastructure.Identity;
+using Application.Common.Interfaces;
+using Domain.Constants;
+using Infrastructure.Data;
+using Infrastructure.Data.Interceptors;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;

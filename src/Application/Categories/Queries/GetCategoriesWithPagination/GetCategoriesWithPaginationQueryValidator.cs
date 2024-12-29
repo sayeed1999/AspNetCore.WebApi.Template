@@ -1,6 +1,6 @@
 using System;
 
-namespace AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
+namespace Application.Categories.Queries.GetCategoriesWithPagination;
 
 public class GetCategoriesWithPaginationQueryValidator : AbstractValidator<GetCategoriesWithPaginationQuery>
 {

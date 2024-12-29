@@ -3,7 +3,7 @@ using System.Net;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCore.WebApi.Template.Web.Infrastructure;
+namespace Web.Infrastructure;
 
 /// <summary>
 ///     Global Exception handler using old way (not used currently due to using IExceptionHandlers for exceptions..
@@ -57,7 +57,10 @@ public class GlobalExceptionHandlerMiddleware(RequestDelegate next)
 
         ProblemDetails problemDetails = new()
         {
-            Status = (int?)code, Title = title, Type = type, Detail = exception.Message
+            Status = (int?)code,
+            Title = title,
+            Type = type,
+            Detail = exception.Message
         };
 
         context.Response.ContentType = "application/json";

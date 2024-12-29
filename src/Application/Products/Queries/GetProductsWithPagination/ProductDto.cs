@@ -1,6 +1,6 @@
-﻿using AspNetCore.WebApi.Template.Domain.Entities;
+﻿using Domain.Entities;
 
-namespace AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWithPagination;
+namespace Application.Products.Queries.GetProductsWithPagination;
 
 public class ProductDto
 {

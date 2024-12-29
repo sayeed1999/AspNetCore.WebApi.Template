@@ -2,7 +2,7 @@ using System;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.OpenApi.Models;
 
-namespace AspNetCore.WebApi.Template.Web.Extensions;
+namespace Web.Extensions;
 
 public static class SwaggerServiceExtension
 {

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using AspNetCore.WebApi.Template.Domain.Entities;
+using Domain.Entities;
 
 namespace Domain.UnitTests;
 

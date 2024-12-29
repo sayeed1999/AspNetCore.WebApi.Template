@@ -1,10 +1,10 @@
-﻿using AspNetCore.WebApi.Template.Domain.Entities;
-using AspNetCore.WebApi.Template.Infrastructure.Identity;
+﻿using Domain.Entities;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace AspNetCore.WebApi.Template.Infrastructure.Data;
+namespace Infrastructure.Data;
 
 // public static class InitialiserExtensions
 // {

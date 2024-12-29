@@ -1,5 +1,5 @@
 using System.Data.Common;
-using AspNetCore.WebApi.Template.Infrastructure.Data;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Npgsql;

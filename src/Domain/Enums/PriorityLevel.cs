@@ -1,4 +1,4 @@
-﻿namespace AspNetCore.WebApi.Template.Domain.Enums;
+﻿namespace Domain.Enums;
 
 public enum PriorityLevel
 {

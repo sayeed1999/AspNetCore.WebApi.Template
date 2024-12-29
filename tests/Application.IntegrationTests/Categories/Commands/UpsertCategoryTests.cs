@@ -1,8 +1,8 @@
 using System.Data;
-using AspNetCore.WebApi.Template.Application.Categories.Commands.DeleteCategory;
-using AspNetCore.WebApi.Template.Application.Categories.Commands.UpsertCategory;
-using AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
-using AspNetCore.WebApi.Template.Domain.Entities;
+using Application.Categories.Commands.DeleteCategory;
+using Application.Categories.Commands.UpsertCategory;
+using Application.Categories.Queries.GetCategoriesWithPagination;
+using Domain.Entities;
 using FluentAssertions;
 using static Application.IntegrationTests.Testing;
 

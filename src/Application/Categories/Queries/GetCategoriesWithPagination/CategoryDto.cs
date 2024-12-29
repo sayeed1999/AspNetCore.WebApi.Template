@@ -1,7 +1,7 @@
 using System;
-using AspNetCore.WebApi.Template.Domain.Entities;
+using Domain.Entities;
 
-namespace AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
+namespace Application.Categories.Queries.GetCategoriesWithPagination;
 
 public class CategoryDto
 {

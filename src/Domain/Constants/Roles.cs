@@ -1,4 +1,4 @@
-﻿namespace AspNetCore.WebApi.Template.Domain.Constants;
+﻿namespace Domain.Constants;
 
 public abstract class Roles
 {

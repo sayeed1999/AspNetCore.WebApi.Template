@@ -1,6 +1,6 @@
-﻿using AspNetCore.WebApi.Template.Application.Common.Models;
+﻿using Application.Common.Models;
 
-namespace AspNetCore.WebApi.Template.Application.Common.Interfaces;
+namespace Application.Common.Interfaces;
 
 public interface IIdentityService
 {

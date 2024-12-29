@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using AspNetCore.WebApi.Template.Domain.Entities;
+using Domain.Entities;
 
 namespace Domain.UnitTests;
 
@@ -8,7 +8,7 @@ public static partial class ConstantData
 {
     public static readonly Guid TestCategory1Id = Guid.NewGuid();
     public static readonly Guid TestCategory2Id = Guid.NewGuid();
-    
+
     public static readonly Category TestCategory1 = MakeCategory(
         id: TestCategory1Id,
         name: "Electronics",

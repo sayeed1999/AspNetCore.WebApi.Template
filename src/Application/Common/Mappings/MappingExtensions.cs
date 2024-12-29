@@ -1,6 +1,6 @@
-﻿using AspNetCore.WebApi.Template.Application.Common.Models;
+﻿using Application.Common.Models;
 
-namespace AspNetCore.WebApi.Template.Application.Common.Mappings;
+namespace Application.Common.Mappings;
 
 public static class MappingExtensions
 {

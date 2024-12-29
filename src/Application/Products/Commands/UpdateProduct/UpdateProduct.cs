@@ -1,9 +1,9 @@
-﻿using AspNetCore.WebApi.Template.Application.Common.Exceptions;
-using AspNetCore.WebApi.Template.Application.Common.Interfaces;
-using AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWithPagination;
-using AspNetCore.WebApi.Template.Domain.Entities;
+﻿using Application.Common.Exceptions;
+using Application.Common.Interfaces;
+using Application.Products.Queries.GetProductsWithPagination;
+using Domain.Entities;
 
-namespace AspNetCore.WebApi.Template.Application.Products.Commands.UpdateProduct;
+namespace Application.Products.Commands.UpdateProduct;
 
 public record UpdateProductCommand : IRequest<ProductDto>
 {

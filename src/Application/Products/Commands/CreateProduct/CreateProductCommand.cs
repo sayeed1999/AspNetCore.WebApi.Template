@@ -1,9 +1,9 @@
-﻿using AspNetCore.WebApi.Template.Application.Common.Interfaces;
-using AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWithPagination;
-using AspNetCore.WebApi.Template.Domain.Entities;
-using AspNetCore.WebApi.Template.Domain.Events;
+﻿using Application.Common.Interfaces;
+using Application.Products.Queries.GetProductsWithPagination;
+using Domain.Entities;
+using Domain.Events;
 
-namespace AspNetCore.WebApi.Template.Application.Products.Commands.CreateProduct;
+namespace Application.Products.Commands.CreateProduct;
 
 public record CreateProductCommand : IRequest<ProductDto>
 {

@@ -1,14 +1,14 @@
 ﻿using System.Text.Json.Serialization;
-using AspNetCore.WebApi.Template.Application.Common.Interfaces;
-using AspNetCore.WebApi.Template.Infrastructure.Data;
-using AspNetCore.WebApi.Template.Web.Extensions;
-using AspNetCore.WebApi.Template.Web.Infrastructure;
-using AspNetCore.WebApi.Template.Web.Services;
-using AspNetCore.WebApi.Template.Web.Workers;
+using Application.Common.Interfaces;
+using Infrastructure.Data;
+using Web.Extensions;
+using Web.Infrastructure;
+using Web.Services;
+using Web.Workers;
 using Azure.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCore.WebApi.Template;
+namespace Web;
 
 public static class DependencyInjection
 {
@@ -39,7 +39,7 @@ public static class DependencyInjection
 
         services.AddOpenApi();
         services.AddOpenApiDocument();
-        services.RegisterSwagger(nameof(Template));
+        services.RegisterSwagger(nameof(Web));
 
         return services;
     }

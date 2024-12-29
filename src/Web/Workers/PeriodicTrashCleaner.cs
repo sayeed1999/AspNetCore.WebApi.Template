@@ -1,7 +1,7 @@
-using AspNetCore.WebApi.Template.Application.Common.Interfaces;
+using Application.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace AspNetCore.WebApi.Template.Web.Workers;
+namespace Web.Workers;
 
 /// <summary>
 /// This recurring background job runs every day once and deletes all entities

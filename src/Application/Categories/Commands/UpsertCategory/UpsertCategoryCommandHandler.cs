@@ -1,10 +1,10 @@
 ﻿using System.Data;
-using AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
-using AspNetCore.WebApi.Template.Application.Common.Exceptions;
-using AspNetCore.WebApi.Template.Application.Common.Interfaces;
-using AspNetCore.WebApi.Template.Domain.Entities;
+using Application.Categories.Queries.GetCategoriesWithPagination;
+using Application.Common.Exceptions;
+using Application.Common.Interfaces;
+using Domain.Entities;
 
-namespace AspNetCore.WebApi.Template.Application.Categories.Commands.UpsertCategory;
+namespace Application.Categories.Commands.UpsertCategory;
 
 public class UpsertCategoryCommandHandler(
     IApplicationDbContext context,

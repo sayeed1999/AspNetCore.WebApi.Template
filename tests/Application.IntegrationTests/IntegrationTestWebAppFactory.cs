@@ -1,7 +1,7 @@
 using System.Data.Common;
-using AspNetCore.WebApi.Template.Application.Common.Interfaces;
-using AspNetCore.WebApi.Template.Infrastructure.Data;
-using AspNetCore.WebApi.Template.Web.Workers;
+using Application.Common.Interfaces;
+using Infrastructure.Data;
+using Web.Workers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;

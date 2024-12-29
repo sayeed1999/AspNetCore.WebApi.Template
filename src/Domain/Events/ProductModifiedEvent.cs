@@ -1,4 +1,4 @@
-﻿namespace AspNetCore.WebApi.Template.Domain.Events;
+﻿namespace Domain.Events;
 
 public class ProductModifiedEvent : BaseEvent
 {

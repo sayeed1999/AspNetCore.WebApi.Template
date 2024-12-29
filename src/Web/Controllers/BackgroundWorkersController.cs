@@ -1,7 +1,7 @@
-using AspNetCore.WebApi.Template.Web.Workers;
+using Web.Workers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCore.WebApi.Template.Web.Controllers;
+namespace Web.Controllers;
 
 public class BackgroundWorkersController(
     PeriodicTrashCleaner periodicTrashCleanerService

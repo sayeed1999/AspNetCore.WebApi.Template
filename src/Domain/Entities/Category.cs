@@ -1,7 +1,7 @@
 #nullable disable
 using System;
 
-namespace AspNetCore.WebApi.Template.Domain.Entities;
+namespace Domain.Entities;
 
 public class Category : AuditableEntity
 {

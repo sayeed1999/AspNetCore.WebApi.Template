@@ -1,6 +1,6 @@
-﻿using AspNetCore.WebApi.Template.Domain.Entities;
+﻿using Domain.Entities;
 
-namespace AspNetCore.WebApi.Template.Application.Common.Interfaces;
+namespace Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {

@@ -1,10 +1,10 @@
 using System.Security.Claims;
-using AspNetCore.WebApi.Template.Application.Common.Interfaces;
-using AspNetCore.WebApi.Template.Application.Common.Models;
+using Application.Common.Interfaces;
+using Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
-namespace AspNetCore.WebApi.Template.Infrastructure.Identity;
+namespace Infrastructure.Identity;
 
 public class IdentityService(
     UserManager<ApplicationUser> userManager,

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AspNetCore.WebApi.Template.Domain.Common;
+namespace Domain.Common;
 
 public abstract class BaseEntity
 {

@@ -1,4 +1,4 @@
-﻿namespace AspNetCore.WebApi.Template.Application.Products.Commands.UpdateProduct;
+﻿namespace Application.Products.Commands.UpdateProduct;
 
 public class UpdateProductCommandValidator : AbstractValidator<UpdateProductCommand>
 {

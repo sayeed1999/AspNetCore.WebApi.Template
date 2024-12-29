@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>AspNetCore.WebApi.Template.Infrastructure</RootNamespace>
-    <AssemblyName>AspNetCore.WebApi.Template.Infrastructure</AssemblyName>
+    <RootNamespace>Infrastructure</RootNamespace>
+    <AssemblyName>Infrastructure</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

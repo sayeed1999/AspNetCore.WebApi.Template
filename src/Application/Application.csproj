@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>AspNetCore.WebApi.Template.Application</RootNamespace>
-    <AssemblyName>AspNetCore.WebApi.Template.Application</AssemblyName>
+    <RootNamespace>Application</RootNamespace>
+    <AssemblyName>Application</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace AspNetCore.WebApi.Template.Application.Common.Interfaces;
+﻿namespace Application.Common.Interfaces;
 
 public interface IUser
 {

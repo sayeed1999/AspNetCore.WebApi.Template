@@ -1,11 +1,11 @@
-using AspNetCore.WebApi.Template.Application.Categories.Commands.UpsertCategory;
-using AspNetCore.WebApi.Template.Application.Categories.Commands.DeleteCategory;
-using AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
-using AspNetCore.WebApi.Template.Application.Common.Models;
+using Application.Categories.Commands.UpsertCategory;
+using Application.Categories.Commands.DeleteCategory;
+using Application.Categories.Queries.GetCategoriesWithPagination;
+using Application.Common.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCore.WebApi.Template.Web.Controllers;
+namespace Web.Controllers;
 
 public class CategoriesController : BaseController
 {

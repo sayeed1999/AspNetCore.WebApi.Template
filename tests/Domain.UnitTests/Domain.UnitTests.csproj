@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <RootNamespace>AspNetCore.WebApi.Template.Domain.UnitTests</RootNamespace>
-        <AssemblyName>AspNetCore.WebApi.Template.Domain.UnitTests</AssemblyName>
+        <RootNamespace>Domain.UnitTests</RootNamespace>
+        <AssemblyName>Domain.UnitTests</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

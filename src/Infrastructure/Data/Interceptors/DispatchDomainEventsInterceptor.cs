@@ -1,9 +1,9 @@
-﻿using AspNetCore.WebApi.Template.Domain.Common;
+﻿using Domain.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace AspNetCore.WebApi.Template.Infrastructure.Data.Interceptors;
+namespace Infrastructure.Data.Interceptors;
 
 public class DispatchDomainEventsInterceptor : SaveChangesInterceptor
 {

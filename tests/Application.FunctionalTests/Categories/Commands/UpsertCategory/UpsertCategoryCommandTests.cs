@@ -1,11 +1,11 @@
-using AspNetCore.WebApi.Template.Application.Categories.Commands.UpsertCategory;
-using AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
-using AspNetCore.WebApi.Template.Application.Common.Exceptions;
-using AspNetCore.WebApi.Template.Application.FunctionalTests.Common;
-using AspNetCore.WebApi.Template.Domain.Entities;
+using Application.Categories.Commands.UpsertCategory;
+using Application.Categories.Queries.GetCategoriesWithPagination;
+using Application.Common.Exceptions;
+using Application.FunctionalTests.Common;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace AspNetCore.WebApi.Template.Application.FunctionalTests.Categories.Commands.UpsertCategory;
+namespace Application.FunctionalTests.Categories.Commands.UpsertCategory;
 
 public class UpsertCategoryCommandTests : TestBase
 {

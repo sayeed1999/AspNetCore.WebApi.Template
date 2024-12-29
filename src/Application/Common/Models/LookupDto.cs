@@ -1,6 +1,6 @@
-﻿using AspNetCore.WebApi.Template.Domain.Entities;
+﻿using Domain.Entities;
 
-namespace AspNetCore.WebApi.Template.Application.Common.Models;
+namespace Application.Common.Models;
 
 public class LookupDto
 {

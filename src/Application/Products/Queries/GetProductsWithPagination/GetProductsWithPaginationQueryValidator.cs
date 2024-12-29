@@ -1,4 +1,4 @@
-﻿namespace AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWithPagination;
+﻿namespace Application.Products.Queries.GetProductsWithPagination;
 
 public class GetProductsWithPaginationQueryValidator : AbstractValidator<GetProductsWithPaginationQuery>
 {

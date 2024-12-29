@@ -1,6 +1,6 @@
-﻿using AspNetCore.WebApi.Template.Application.Common.Interfaces;
+﻿using Application.Common.Interfaces;
 
-namespace AspNetCore.WebApi.Template.Application.Products.Commands.CreateProduct;
+namespace Application.Products.Commands.CreateProduct;
 
 // Note:-
 // ASP.NET validation pipeline is not asynchronous and hence can’t invoke asynchronous rules.

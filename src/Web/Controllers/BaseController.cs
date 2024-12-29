@@ -1,7 +1,7 @@
 #nullable disable
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCore.WebApi.Template.Web.Controllers
+namespace Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

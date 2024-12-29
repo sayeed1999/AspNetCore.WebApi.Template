@@ -1,7 +1,7 @@
 using Application.IntegrationTests.TestDatabase;
-using AspNetCore.WebApi.Template.Domain.Constants;
-using AspNetCore.WebApi.Template.Infrastructure.Data;
-using AspNetCore.WebApi.Template.Infrastructure.Identity;
+using Domain.Constants;
+using Infrastructure.Data;
+using Infrastructure.Identity;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

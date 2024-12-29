@@ -1,9 +1,9 @@
 using System;
-using AspNetCore.WebApi.Template.Application.Common.Mappings;
-using AspNetCore.WebApi.Template.Infrastructure.Data;
+using Application.Common.Mappings;
+using Infrastructure.Data;
 using AutoMapper;
 
-namespace AspNetCore.WebApi.Template.Application.FunctionalTests.Common;
+namespace Application.FunctionalTests.Common;
 
 public class TestBase : IDisposable
 {

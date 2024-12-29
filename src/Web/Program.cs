@@ -1,5 +1,5 @@
-using AspNetCore.WebApi.Template.Infrastructure.Identity;
-using static AspNetCore.WebApi.Template.DependencyInjection;
+using Infrastructure.Identity;
+using static Web.DependencyInjection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

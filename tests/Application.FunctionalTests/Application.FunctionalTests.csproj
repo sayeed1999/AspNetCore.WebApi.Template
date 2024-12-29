@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>AspNetCore.WebApi.Template.Application.FunctionalTests</RootNamespace>
-    <AssemblyName>AspNetCore.WebApi.Template.Application.FunctionalTests</AssemblyName>
+    <RootNamespace>Application.FunctionalTests</RootNamespace>
+    <AssemblyName>Application.FunctionalTests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

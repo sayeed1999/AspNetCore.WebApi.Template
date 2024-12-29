@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
 
-using AspNetCore.WebApi.Template.Application.Common.Interfaces;
+using Application.Common.Interfaces;
 
-namespace AspNetCore.WebApi.Template.Web.Services;
+namespace Web.Services;
 
 public class CurrentUser : IUser
 {

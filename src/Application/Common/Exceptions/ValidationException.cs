@@ -1,6 +1,6 @@
 ﻿using FluentValidation.Results;
 
-namespace AspNetCore.WebApi.Template.Application.Common.Exceptions;
+namespace Application.Common.Exceptions;
 
 public class ValidationException() : Exception("One or more validation failures have occurred.")
 {

@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <RootNamespace>AspNetCore.WebApi.Template.Web</RootNamespace>
-    <AssemblyName>AspNetCore.WebApi.Template.Web</AssemblyName>
+    <RootNamespace>Web</RootNamespace>
+    <AssemblyName>Web</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

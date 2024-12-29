@@ -28,4 +28,4 @@ RUN dotnet publish "./Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:Use
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "AspNetCore.WebApi.Template.Web.dll"]
+ENTRYPOINT ["dotnet", "Web.dll"]

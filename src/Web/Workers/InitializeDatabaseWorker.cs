@@ -1,7 +1,7 @@
 using System;
-using AspNetCore.WebApi.Template.Infrastructure.Data;
+using Infrastructure.Data;
 
-namespace AspNetCore.WebApi.Template.Web.Workers;
+namespace Web.Workers;
 
 /// <summary>
 /// This background service initializes database with auto-migration & seeding data.

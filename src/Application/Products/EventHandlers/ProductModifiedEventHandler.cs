@@ -1,7 +1,7 @@
-﻿using AspNetCore.WebApi.Template.Domain.Events;
+﻿using Domain.Events;
 using Microsoft.Extensions.Logging;
 
-namespace AspNetCore.WebApi.Template.Application.Products.EventHandlers;
+namespace Application.Products.EventHandlers;
 
 public class ProductModifiedEventHandler : INotificationHandler<ProductModifiedEvent>
 {

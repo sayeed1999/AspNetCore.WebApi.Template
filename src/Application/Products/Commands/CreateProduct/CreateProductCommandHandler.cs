@@ -1,9 +1,9 @@
 using System.Data;
-using AspNetCore.WebApi.Template.Application.Common.Interfaces;
-using AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWithPagination;
-using AspNetCore.WebApi.Template.Domain.Entities;
+using Application.Common.Interfaces;
+using Application.Products.Queries.GetProductsWithPagination;
+using Domain.Entities;
 
-namespace AspNetCore.WebApi.Template.Application.Products.Commands.CreateProduct;
+namespace Application.Products.Commands.CreateProduct;
 
 public class CreateProductCommandHandler(
     IApplicationDbContext context,

@@ -1,8 +1,8 @@
-using AspNetCore.WebApi.Template.Domain.Entities;
-using AspNetCore.WebApi.Template.Infrastructure.Data;
+using Domain.Entities;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace AspNetCore.WebApi.Template.Application.FunctionalTests.Common;
+namespace Application.FunctionalTests.Common;
 
 public class ApplicationDbContextFactory
 {

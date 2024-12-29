@@ -1,9 +1,9 @@
 using System;
-using AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
-using AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWithPagination;
-using AspNetCore.WebApi.Template.Domain.Entities;
+using Application.Categories.Queries.GetCategoriesWithPagination;
+using Application.Products.Queries.GetProductsWithPagination;
+using Domain.Entities;
 
-namespace AspNetCore.WebApi.Template.Application.Common.Mappings;
+namespace Application.Common.Mappings;
 
 public class MappingProfile : Profile
 {

@@ -1,7 +1,7 @@
-using AspNetCore.WebApi.Template.Application.Categories.Commands.UpsertCategory;
+using Application.Categories.Commands.UpsertCategory;
 using FluentValidation.TestHelper;
 
-namespace AspNetCore.WebApi.Template.Application.FunctionalTests.Categories.Commands.UpsertCategory;
+namespace Application.FunctionalTests.Categories.Commands.UpsertCategory;
 
 public class UpsertCategoryCommandValidatorTests
 {
@@ -67,7 +67,8 @@ public class UpsertCategoryCommandValidatorTests
         // Arrange
         UpsertCategoryCommand command = new()
         {
-            Id = Guid.NewGuid(), Name = new string('A', 201) // 201 characters
+            Id = Guid.NewGuid(),
+            Name = new string('A', 201) // 201 characters
         };
 
         // Act

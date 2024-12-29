@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace AspNetCore.WebApi.Template.Infrastructure.Identity;
+namespace Infrastructure.Identity;
 
 public class ApplicationUserToken : IdentityUserToken<Guid>
 {

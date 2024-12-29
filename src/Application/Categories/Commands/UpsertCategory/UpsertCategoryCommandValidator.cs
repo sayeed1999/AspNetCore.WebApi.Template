@@ -1,6 +1,6 @@
-﻿using AspNetCore.WebApi.Template.Application.Common.Interfaces;
+﻿using Application.Common.Interfaces;
 
-namespace AspNetCore.WebApi.Template.Application.Categories.Commands.UpsertCategory;
+namespace Application.Categories.Commands.UpsertCategory;
 
 public class UpsertCategoryCommandValidator : AbstractValidator<UpsertCategoryCommand>
 {

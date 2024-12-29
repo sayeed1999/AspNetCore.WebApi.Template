@@ -1,11 +1,11 @@
 using System.Data;
 using System.Net;
 using System.Text.Json;
-using AspNetCore.WebApi.Template.Application.Common.Exceptions;
+using Application.Common.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCore.WebApi.Template.Web.Infrastructure;
+namespace Web.Infrastructure;
 
 /// <summary>
 ///     Alternate way to handling exceptions rather than middleware which needs a try catch to catch exceptions.
@@ -67,7 +67,10 @@ public class GlobalExceptionHandler : IExceptionHandler
 
         ProblemDetails problemDetails = new()
         {
-            Status = (int?)code, Title = title, Type = type, Detail = exception.Message
+            Status = (int?)code,
+            Title = title,
+            Type = type,
+            Detail = exception.Message
         };
 
         httpContext.Response.ContentType = "application/json";

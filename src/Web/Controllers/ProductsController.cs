@@ -1,10 +1,10 @@
-using AspNetCore.WebApi.Template.Application.Products.Commands.CreateProduct;
-using AspNetCore.WebApi.Template.Application.Products.Commands.DeleteProduct;
-using AspNetCore.WebApi.Template.Application.Products.Commands.UpdateProduct;
-using AspNetCore.WebApi.Template.Application.Products.Queries.GetProductsWithPagination;
+using Application.Products.Commands.CreateProduct;
+using Application.Products.Commands.DeleteProduct;
+using Application.Products.Commands.UpdateProduct;
+using Application.Products.Queries.GetProductsWithPagination;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetCore.WebApi.Template.Web.Controllers;
+namespace Web.Controllers;
 
 public class ProductsController : BaseController
 {

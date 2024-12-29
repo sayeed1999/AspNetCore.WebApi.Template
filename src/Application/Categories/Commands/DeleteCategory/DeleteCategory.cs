@@ -1,9 +1,9 @@
-﻿using AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
-using AspNetCore.WebApi.Template.Application.Common.Exceptions;
-using AspNetCore.WebApi.Template.Application.Common.Interfaces;
-using AspNetCore.WebApi.Template.Domain.Entities;
+﻿using Application.Categories.Queries.GetCategoriesWithPagination;
+using Application.Common.Exceptions;
+using Application.Common.Interfaces;
+using Domain.Entities;
 
-namespace AspNetCore.WebApi.Template.Application.Categories.Commands.DeleteCategory;
+namespace Application.Categories.Commands.DeleteCategory;
 
 public record DeleteCategoryCommand(Guid Id) : IRequest<CategoryDto>;
 

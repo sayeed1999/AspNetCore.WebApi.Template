@@ -1,8 +1,8 @@
-using AspNetCore.WebApi.Template.Application.Common.Interfaces;
-using AspNetCore.WebApi.Template.Application.Common.Mappings;
-using AspNetCore.WebApi.Template.Application.Common.Models;
+using Application.Common.Interfaces;
+using Application.Common.Mappings;
+using Application.Common.Models;
 
-namespace AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
+namespace Application.Categories.Queries.GetCategoriesWithPagination;
 
 public record GetCategoriesWithPaginationQuery : IRequest<PaginatedList<CategoryDto>>
 {
