@@ -1,4 +1,5 @@
 using System.Data;
+using AspNetCore.WebApi.Template.Application.Categories.Commands.DeleteCategory;
 using AspNetCore.WebApi.Template.Application.Categories.Commands.UpsertCategory;
 using AspNetCore.WebApi.Template.Application.Categories.Queries.GetCategoriesWithPagination;
 using AspNetCore.WebApi.Template.Domain.Entities;
@@ -9,40 +10,44 @@ namespace Application.IntegrationTests.Categories.Commands;
 
 public class UpsertCategoryTests : BaseTestFixture
 {
+    private readonly UpsertCategoryCommand _command1 = new() { Name = "Pen" };
+    private readonly UpsertCategoryCommand _command2 = new() { Name = "Pencil" };
+
+    private Task<CategoryDto> CreateCategory(UpsertCategoryCommand command)
+    {
+        return SendAsync(command);
+    }
+
     [Test]
     public async Task Create_UniqueName_Success()
     {
         int count = await CountAsync<Category>();
         count.Should().Be(0);
 
-        UpsertCategoryCommand command = new() { Name = "TestCategory - 1" };
-
         // Act
-        CategoryDto categoryDto = await SendAsync(command);
+        CategoryDto categoryDto = await CreateCategory(_command1);
 
         #region assert
 
         categoryDto.Should().NotBeNull();
         categoryDto.Id.Should().NotBeEmpty();
         categoryDto.Id.Should().NotBe(Guid.Empty);
-        categoryDto.Name.Should().Be("TestCategory - 1");
+        categoryDto.Name.Should().Be(_command1.Name);
 
         #endregion
 
         count = await CountAsync<Category>();
         count.Should().Be(1);
 
-        command = new UpsertCategoryCommand { Name = "TestCategory - 2" };
-
         // Act
-        categoryDto = await SendAsync(command);
+        categoryDto = await CreateCategory(_command2);
 
         #region assert
 
         categoryDto.Should().NotBeNull();
         categoryDto.Id.Should().NotBeEmpty();
         categoryDto.Id.Should().NotBe(Guid.Empty);
-        categoryDto.Name.Should().Be("TestCategory - 2");
+        categoryDto.Name.Should().Be(_command2.Name);
 
         #endregion
 
@@ -51,25 +56,52 @@ public class UpsertCategoryTests : BaseTestFixture
     }
 
     [Test]
+    public async Task Update_ExistingCategory_Success()
+    {
+        // Act: initial entry
+        CategoryDto categoryDto = await CreateCategory(_command1);
+
+        // Assert: assert initial entry
+        Category? itemInDb = await FindAsync<Category>(categoryDto.Id!);
+        itemInDb!.Name.Should().Be(_command1.Name);
+
+        // Act: update entry
+        UpsertCategoryCommand updateCommand = new() { Id = categoryDto.Id!, Name = "Pen (updated)" };
+        await CreateCategory(updateCommand);
+
+        // Assert: assert updated entry
+        itemInDb = await FindAsync<Category>(categoryDto.Id!);
+        itemInDb!.Name.Should().Be("Pen (updated)");
+    }
+
+    [Test]
     public async Task Create_DuplicateName_Failure()
     {
         int count = await CountAsync<Category>();
         count.Should().Be(0);
 
-        UpsertCategoryCommand command = new() { Name = "TestCategory - 1" };
+        // Act: initial entry is done successfully
+        await FluentActions.Invoking(() => CreateCategory(_command1))
+            .Should()
+            .NotThrowAsync();
 
-        Func<Task<CategoryDto>> action = () => SendAsync(command);
-
-        // Act
-        await action();
-
-        count = await CountAsync<Category>();
-        count.Should().Be(1);
-
-        // Act: duplicate entry
-        await FluentActions.Invoking(action)
+        // Act: duplicate entry throws exception
+        await FluentActions.Invoking(() => CreateCategory(_command1))
             .Should()
             .ThrowAsync<DuplicateNameException>()
             .WithMessage("Category name is already taken.");
+    }
+
+    [Test]
+    public async Task Create_DuplicateName_Allowed_IfPreviousOneIsSoftDeleted()
+    {
+        CategoryDto categoryDto = await CreateCategory(_command1);
+
+        DeleteCategoryCommand deleteCommand = new(categoryDto.Id ?? Guid.Empty);
+        await SendAsync(deleteCommand);
+
+        await FluentActions.Invoking(() => CreateCategory(_command1))
+            .Should()
+            .NotThrowAsync();
     }
 }
