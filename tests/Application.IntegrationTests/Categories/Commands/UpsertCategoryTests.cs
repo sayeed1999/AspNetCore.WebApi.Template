@@ -13,13 +13,8 @@ public class UpsertCategoryTests : BaseTestFixture
     private readonly UpsertCategoryCommand _command1 = new() { Name = "Pen" };
     private readonly UpsertCategoryCommand _command2 = new() { Name = "Pencil" };
 
-    private Task<CategoryDto> CreateCategory(UpsertCategoryCommand command)
-    {
-        return SendAsync(command);
-    }
-
     [Test]
-    public async Task Create_UniqueName_Success()
+    public async Task Create_NewCategory_Success()
     {
         int count = await CountAsync<Category>();
         count.Should().Be(0);
@@ -71,11 +66,12 @@ public class UpsertCategoryTests : BaseTestFixture
 
         // Assert: assert updated entry
         itemInDb = await FindAsync<Category>(categoryDto.Id!);
-        itemInDb!.Name.Should().Be("Pen (updated)");
+        itemInDb!.Name.Should().NotBe(_command1.Name);
+        itemInDb.Name.Should().Be("Pen (updated)");
     }
 
     [Test]
-    public async Task Create_DuplicateName_Failure()
+    public async Task Create_DuplicateCategory_ThrowsException()
     {
         int count = await CountAsync<Category>();
         count.Should().Be(0);
@@ -103,5 +99,10 @@ public class UpsertCategoryTests : BaseTestFixture
         await FluentActions.Invoking(() => CreateCategory(_command1))
             .Should()
             .NotThrowAsync();
+    }
+
+    private Task<CategoryDto> CreateCategory(UpsertCategoryCommand command)
+    {
+        return SendAsync(command);
     }
 }
