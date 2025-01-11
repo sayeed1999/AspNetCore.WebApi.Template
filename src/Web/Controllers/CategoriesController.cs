@@ -1,24 +1,37 @@
-using Application.Categories.Commands.UpsertCategory;
 using Application.Categories.Commands.DeleteCategory;
+using Application.Categories.Commands.UpsertCategory;
 using Application.Categories.Queries.GetCategoriesWithPagination;
 using Application.Common.Models;
-using Microsoft.AspNetCore.Http;
+using Domain.Entities;
+using Infrastructure.Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Formatter;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Results;
 
 namespace Web.Controllers;
 
-public class CategoriesController : BaseController
+public class CategoriesController(ICategoryRepository _repository) : BaseController
 {
+    [EnableQuery(PageSize = 10)]
+    [HttpGet]
+    public IQueryable<Category> GetCategories()
+    {
+        return _repository.GetAll();
+    }
+
+    [EnableQuery]
+    [HttpGet("{id}")]
+    public SingleResult<Category> GetCategory([FromODataUri] Guid key)
+    {
+        return SingleResult.Create(_repository.GetById(key));
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetCategoriesWithPagination(
         [FromQuery] GetCategoriesWithPaginationQuery query)
     {
-        var res = await Mediator.Send(query);
-
-        if (res is null)
-        {
-            return BadRequest(res);
-        }
+        PaginatedList<CategoryDto> res = await Mediator.Send(query);
 
         return Ok(res);
     }
@@ -26,7 +39,7 @@ public class CategoriesController : BaseController
     [HttpPost]
     public async Task<IActionResult> UpsertCategory(UpsertCategoryCommand command)
     {
-        var result = await Mediator.Send(command);
+        CategoryDto result = await Mediator.Send(command);
 
         return Ok(result);
     }
@@ -34,7 +47,7 @@ public class CategoriesController : BaseController
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCategory(Guid id)
     {
-        var res = await Mediator.Send(new DeleteCategoryCommand(id));
+        CategoryDto res = await Mediator.Send(new DeleteCategoryCommand(id));
 
         return Ok(res);
     }

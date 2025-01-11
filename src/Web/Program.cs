@@ -40,7 +40,6 @@ app.MapHealthChecks("/health").DisableHttpMetrics();
 app.UseAuthorization();
 
 app.UseExceptionHandler();
-// app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 
 app.MapControllers();
 

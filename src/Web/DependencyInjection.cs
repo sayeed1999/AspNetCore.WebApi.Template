@@ -1,12 +1,16 @@
 ﻿using System.Text.Json.Serialization;
 using Application.Common.Interfaces;
+using Azure.Identity;
+using Domain.Entities;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData;
+using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
 using Web.Extensions;
 using Web.Infrastructure;
 using Web.Services;
 using Web.Workers;
-using Azure.Identity;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Web;
 
@@ -19,7 +23,16 @@ public static class DependencyInjection
             {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                 options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals;
-            });
+            })
+            .AddOData(options => options
+                .AddRouteComponents("odata", GetEdmModel())
+                .Select()
+                .Filter()
+                .OrderBy()
+                .SetMaxTop(20)
+                .Count()
+                .Expand()
+            );
 
         services.AddBackgroundServices();
 
@@ -44,7 +57,17 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddBackgroundServices(this IServiceCollection services)
+    private static IEdmModel GetEdmModel()
+    {
+        ODataConventionModelBuilder builder = new();
+
+        builder.EntitySet<Category>("Categories");
+        builder.EntitySet<Product>("Products");
+
+        return builder.GetEdmModel();
+    }
+
+    private static IServiceCollection AddBackgroundServices(this IServiceCollection services)
     {
         services.AddHostedService<InitializeDatabaseWorker>();
 
