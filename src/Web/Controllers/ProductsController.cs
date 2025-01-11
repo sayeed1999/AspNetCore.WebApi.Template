@@ -1,26 +1,41 @@
 using Application.Products.Commands.CreateProduct;
 using Application.Products.Commands.DeleteProduct;
 using Application.Products.Commands.UpdateProduct;
-using Application.Products.Queries.GetProductsWithPagination;
+using Domain.Entities;
+using Infrastructure.Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Formatter;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Results;
 
 namespace Web.Controllers;
 
-public class ProductsController : BaseController
+public class ProductsController(IProductRepository _repository) : BaseController
 {
+    [EnableQuery]
     [HttpGet]
-    public async Task<IActionResult> GetProductsWithPagination(
-        [FromQuery] GetProductsWithPaginationQuery query)
+    public IQueryable<Product> GetProducts()
     {
-        var res = await Mediator.Send(query);
-
-        if (res is null)
-        {
-            return BadRequest(res);
-        }
-
-        return Ok(res);
+        return _repository.GetAll();
     }
+
+    // Note: **The naming is very bug prone! When I rename GetProduct to something else, it doesn't work! :(
+    [EnableQuery]
+    [HttpGet("{id}")]
+    public SingleResult<Product> GetProduct([FromODataUri] Guid key)
+    {
+        return SingleResult.Create(_repository.GetById(key));
+    }
+
+    // Note: This conflicts with odata queries when both has same route='/products'
+    // [HttpGet]
+    // public async Task<IActionResult> GetProductsWithPagination(
+    //     [FromQuery] GetProductsWithPaginationQuery query)
+    // {
+    //     var res = await Mediator.Send(query);
+
+    //     return Ok(res);
+    // }
 
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromBody] CreateProductCommand command)

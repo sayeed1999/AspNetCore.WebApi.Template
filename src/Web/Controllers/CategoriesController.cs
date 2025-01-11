@@ -1,7 +1,6 @@
 using Application.Categories.Commands.DeleteCategory;
 using Application.Categories.Commands.UpsertCategory;
 using Application.Categories.Queries.GetCategoriesWithPagination;
-using Application.Common.Models;
 using Domain.Entities;
 using Infrastructure.Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +12,14 @@ namespace Web.Controllers;
 
 public class CategoriesController(ICategoryRepository _repository) : BaseController
 {
-    [EnableQuery(PageSize = 10)]
+    [EnableQuery]
     [HttpGet]
     public IQueryable<Category> GetCategories()
     {
         return _repository.GetAll();
     }
 
+    // Note: **The naming is very bug prone! When I rename GetCategory to something else, it doesn't work! :(
     [EnableQuery]
     [HttpGet("{id}")]
     public SingleResult<Category> GetCategory([FromODataUri] Guid key)
@@ -27,14 +27,15 @@ public class CategoriesController(ICategoryRepository _repository) : BaseControl
         return SingleResult.Create(_repository.GetById(key));
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetCategoriesWithPagination(
-        [FromQuery] GetCategoriesWithPaginationQuery query)
-    {
-        PaginatedList<CategoryDto> res = await Mediator.Send(query);
+    // Note: This conflicts with odata queries when both has same route='/categories'
+    // [HttpGet]
+    // public async Task<IActionResult> GetCategoriesWithPagination(
+    //     [FromQuery] GetCategoriesWithPaginationQuery query)
+    // {
+    //     PaginatedList<CategoryDto> res = await Mediator.Send(query);
 
-        return Ok(res);
-    }
+    //     return Ok(res);
+    // }
 
     [HttpPost]
     public async Task<IActionResult> UpsertCategory(UpsertCategoryCommand command)
