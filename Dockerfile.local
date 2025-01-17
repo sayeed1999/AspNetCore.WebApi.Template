@@ -1,0 +1,31 @@
+# Use the SDK image for building and running the application with hot reloading
+FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS base
+WORKDIR /app
+EXPOSE 8080
+
+# Copy project files
+COPY src/Web/Web.csproj src/Web/
+COPY src/Application/Application.csproj src/Application/
+COPY src/Infrastructure/Infrastructure.csproj src/Infrastructure/
+COPY src/Domain/Domain.csproj src/Domain/
+COPY Directory.Packages.props ./
+COPY Directory.Build.props ./
+COPY global.json ./
+
+# Restore the dependencies
+RUN dotnet restore "./src/Web/Web.csproj"
+
+# Now copy the entire source code (after restoring dependencies)
+COPY . .
+
+# Set the working directory to the Web project
+WORKDIR "/app/src/Web"
+
+# Note: Don't switch to the non-root user !!
+# USER app
+
+# Build the app with dotnet build before running
+RUN dotnet build
+
+# Use dotnet watch for hot reloading during local development
+CMD ["dotnet", "watch", "run", "--urls", "http://+:8080"]

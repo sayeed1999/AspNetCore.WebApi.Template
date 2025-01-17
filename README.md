@@ -50,7 +50,7 @@ export PGADMIN_PASSWORD=xxx
 - Run the docker containers using the following command.
 
 ```bash
-docker-compose up -d
+docker compose -f docker-compose.local.yml up -d
 ```
 
 - Hit the healthcheck endpoint to see API is working on not.
@@ -62,7 +62,7 @@ URI: /GET localhost:5000/health
 - Stop the docker container using the following command.
 
 ```bash
-docker-compose down
+docker compose -f docker-compose.local.yml down
 ```
 
 ## Add a Migration

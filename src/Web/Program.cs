@@ -12,7 +12,7 @@ builder.Services.AddKeyVaultIfConfigured(builder.Configuration);
 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddWebServices();
+builder.Services.AddWebServices(builder.Environment);
 
 WebApplication app = builder.Build();
 
@@ -29,11 +29,13 @@ if (builder.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-#if DEBUG
-app.UseHttpsRedirection();
-#endif
+if (!builder.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+    app.UseHsts();
+}
 
-app.MapStaticAssets();
+app.MapStaticAssets(); // tries to map static assets from /wwwroot folder
 
 app.MapHealthChecks("/health").DisableHttpMetrics();
 

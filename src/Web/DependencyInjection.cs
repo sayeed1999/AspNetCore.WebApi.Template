@@ -16,7 +16,7 @@ namespace Web;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddWebServices(this IServiceCollection services)
+    public static IServiceCollection AddWebServices(this IServiceCollection services, IWebHostEnvironment environment)
     {
         services.AddControllers()
             .AddJsonOptions(options =>
@@ -53,6 +53,11 @@ public static class DependencyInjection
         services.AddOpenApi();
         services.AddOpenApiDocument();
         services.RegisterSwagger(nameof(Web));
+
+        if (!environment.IsDevelopment())
+        {
+            services.AddHttpsRedirection(_ => { });
+        }
 
         return services;
     }
