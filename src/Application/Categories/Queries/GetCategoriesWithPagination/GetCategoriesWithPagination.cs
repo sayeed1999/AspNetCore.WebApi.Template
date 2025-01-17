@@ -1,6 +1,7 @@
 using Application.Common.Interfaces;
 using Application.Common.Mappings;
 using Application.Common.Models;
+using Domain.Entities;
 
 namespace Application.Categories.Queries.GetCategoriesWithPagination;
 
@@ -14,11 +15,12 @@ public record GetCategoriesWithPaginationQuery : IRequest<PaginatedList<Category
 public class GetCategoriesWithPaginationQueryHandler(
     IApplicationDbContext context,
     IMapper mapper)
-: IRequestHandler<GetCategoriesWithPaginationQuery, PaginatedList<CategoryDto>>
+    : IRequestHandler<GetCategoriesWithPaginationQuery, PaginatedList<CategoryDto>>
 {
-    public async Task<PaginatedList<CategoryDto>> Handle(GetCategoriesWithPaginationQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedList<CategoryDto>> Handle(GetCategoriesWithPaginationQuery request,
+        CancellationToken cancellationToken)
     {
-        var query = context.Categories.AsQueryable();
+        IQueryable<Category> query = context.Categories.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(request.Name))
         {
@@ -29,6 +31,6 @@ public class GetCategoriesWithPaginationQueryHandler(
             .Where(x => x.IsDeleted != true)
             .OrderBy(x => x.Name)
             .ProjectTo<CategoryDto>(mapper.ConfigurationProvider)
-            .PaginatedListAsync(request.PageNumber, request.PageSize);
+            .PaginatedListAsync(request.PageNumber, request.PageSize, cancellationToken);
     }
 }

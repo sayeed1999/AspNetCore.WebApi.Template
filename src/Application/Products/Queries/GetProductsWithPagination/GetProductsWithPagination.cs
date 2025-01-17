@@ -1,6 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Mappings;
 using Application.Common.Models;
+using Domain.Entities;
 
 namespace Application.Products.Queries.GetProductsWithPagination;
 
@@ -15,11 +16,12 @@ public record GetProductsWithPaginationQuery : IRequest<PaginatedList<ProductDto
 public class GetProductsWithPaginationQueryHandler(
     IApplicationDbContext context,
     IMapper mapper)
-: IRequestHandler<GetProductsWithPaginationQuery, PaginatedList<ProductDto>>
+    : IRequestHandler<GetProductsWithPaginationQuery, PaginatedList<ProductDto>>
 {
-    public async Task<PaginatedList<ProductDto>> Handle(GetProductsWithPaginationQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedList<ProductDto>> Handle(GetProductsWithPaginationQuery request,
+        CancellationToken cancellationToken)
     {
-        var query = context.Products.AsQueryable();
+        IQueryable<Product> query = context.Products.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(request.Name))
         {
@@ -35,6 +37,6 @@ public class GetProductsWithPaginationQueryHandler(
             .Where(x => x.IsDeleted != true)
             .OrderBy(x => x.Name)
             .ProjectTo<ProductDto>(mapper.ConfigurationProvider)
-            .PaginatedListAsync(request.PageNumber, request.PageSize);
+            .PaginatedListAsync(request.PageNumber, request.PageSize, cancellationToken);
     }
 }
