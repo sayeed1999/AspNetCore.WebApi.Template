@@ -11,12 +11,20 @@ public static class MappingExtensions
         CancellationToken cancellationToken = default) where TDestination : class
     {
         return PaginatedList<TDestination>.CreateAsync(
-            queryable.AsNoTracking(), pageNumber, pageSize, cancellationToken);
+            queryable.AsNoTracking(),
+            pageNumber,
+            pageSize,
+            cancellationToken);
     }
 
-    public static Task<List<TDestination>> ProjectToListAsync<TDestination>(this IQueryable queryable,
-        IConfigurationProvider configuration) where TDestination : class
+    public static Task<List<TDestination>> ProjectToListAsync<TDestination>(
+        this IQueryable queryable,
+        IConfigurationProvider configuration,
+        CancellationToken cancellationToken = default) where TDestination : class
     {
-        return queryable.ProjectTo<TDestination>(configuration).AsNoTracking().ToListAsync();
+        return queryable
+            .ProjectTo<TDestination>(configuration)
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
     }
 }
