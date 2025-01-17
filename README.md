@@ -3,9 +3,9 @@
 **AspNetCore.WebApi.Template** is an open-source project to speed up the API development process of any small-large scale application in ASP.NET Core. This comes with out-of-the box prebuilt setups including -
 
 - **ASP.NET Core** Web API with **PostgreSQL** database
-- **Docker** container support
-- **Clean Architecture** with **CQRS** and **Mediatr**
-- **FluentValidation** middleware pipeline to validate requests
+- **Docker** container support with hot reloading support for local development
+- **Clean Architecture** with **FluentValidation**, **CQRS** and **Mediatr**
+- **OData** integration support
 - Sample code for **CRUD operation** on Products, Categories
 - Sample code for **functional testing** of business usecases
 - <i>any many more..</i>
@@ -58,6 +58,10 @@ docker compose -f docker-compose.local.yml up -d
 ```
 URI: /GET localhost:5000/health
 ```
+
+- Test hot reloading working or not inside Docker container.
+
+Change any code (comment out a single endpoint) and save the code and see docker container has updated on real-tme.
 
 - Stop the docker container using the following command.
 
